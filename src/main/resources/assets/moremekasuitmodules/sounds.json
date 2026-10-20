@@ -1,0 +1,20 @@
+{
+  "antimatter_strike_fire": {
+    "sounds": [
+      {
+        "name": "moremekasuitmodules:antimatter_strike_fire",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "antimatter_charge_start": {
+    "sounds": [
+      {
+        "name": "moremekasuitmodules:antimatter_charge_start",
+        "volume": 0.32,
+        "pitch": 1.0
+      }
+    ]
+  }
+}

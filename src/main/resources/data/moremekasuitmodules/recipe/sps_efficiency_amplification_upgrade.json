@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NGN",
+    "SES",
+    "NGN"
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "G": {
+      "item": "mekanism:sps_casing"
+    },
+    "S": {
+      "item": "moremekasuitmodules:solipsismium_296"
+    },
+    "E": {
+      "item": "mekanism:upgrade_energy"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:sps_efficiency_amplification_upgrade"
+  }
+}

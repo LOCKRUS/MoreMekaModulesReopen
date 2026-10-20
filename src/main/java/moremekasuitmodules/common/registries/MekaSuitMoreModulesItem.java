@@ -1,0 +1,90 @@
+package moremekasuitmodules.common.registries;
+
+import mekanism.common.item.ItemModule;
+import mekanism.common.registration.impl.ItemDeferredRegister;
+import mekanism.common.registration.impl.ItemRegistryObject;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
+import moremekasuitmodules.common.item.StardustItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
+
+public class MekaSuitMoreModulesItem {
+
+    public MekaSuitMoreModulesItem() {
+    }
+
+    public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(MoreMekaModulesReopen.MODID);
+
+    //生命恢复单元
+    public static final ItemRegistryObject<ItemModule> MODULE_HEALTH_REGENERATION = ITEMS.registerModule(MekaSuitMoreModules.HEALTH_REGENERATION_UNIT, Rarity.RARE);
+    //紧急救援（消耗该单元来进行复活玩家）
+    public static final ItemRegistryObject<ItemModule> MODULE_EMERGENCY_RESCUE = ITEMS.registerModule(MekaSuitMoreModules.EMERGENCY_RESCUE_UNIT, Rarity.EPIC);
+    //先进救援（不消耗该单元来进行复活玩家，且如果安装并启用了紧急救援，则不消耗紧急救援）
+    public static final ItemRegistryObject<ItemModule> MODULE_ADVANCED_INTERCEPTION_SYSTEM = ITEMS.registerModule(MekaSuitMoreModules.ADVANCED_INTERCEPTION_SYSTEM_UNIT, Rarity.EPIC);
+    //绝缘单元 IE 和 GTCEU（将电流导入大地，防止导致受伤）
+    public static final ItemRegistryObject<ItemModule> MODULE_INSULATED = ITEMS.registerModule(MekaSuitMoreModules.INSULATED_UNIT);
+    //自动灭火单元（着火时消耗MekaSuit能量自动灭火）
+    public static final ItemRegistryObject<ItemModule> MODULE_AUTOMATIC_EXTINGUISH = ITEMS.registerModule(MekaSuitMoreModules.AUTOMATIC_EXTINGUISH_UNIT, Rarity.UNCOMMON);
+    // Контратака
+    public static final ItemRegistryObject<ItemModule> MODULE_COUNTERATTACK = ITEMS.registerModule(MekaSuitMoreModules.COUNTERATTACK_UNIT, Rarity.RARE);
+    // Модуль отображения рамок живых существ для шлема
+    public static final ItemRegistryObject<ItemModule> MODULE_ENTITY_DISPLAY_BOX = ITEMS.registerModule(MekaSuitMoreModules.ENTITY_DISPLAY_BOX_UNIT, Rarity.EPIC);
+    // Wall Cling Unit
+    public static final ItemRegistryObject<ItemModule> MODULE_WALL_CLING = ITEMS.registerModule(MekaSuitMoreModules.WALL_CLING_UNIT, Rarity.RARE);
+    // Impact Wave Unit
+    public static final ItemRegistryObject<ItemModule> MODULE_IMPACT_WAVE = ITEMS.registerModule(MekaSuitMoreModules.IMPACT_WAVE_UNIT, Rarity.EPIC);
+    public static final ItemRegistryObject<ItemModule> MODULE_HYPER_ARMOR = ITEMS.registerModule(MekaSuitMoreModules.HYPER_ARMOR_UNIT, Rarity.EPIC);
+    // Capacity Amplification Unit
+    public static final ItemRegistryObject<ItemModule> MODULE_CAPACITY_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.CAPACITY_AMPLIFICATION_UNIT, Rarity.EPIC);
+    //能量护盾单元 龙研 （给meka套提供能量护盾）[最大10个](需要mixin)[因为DR3的盾无法实现，所以是按照DR2的盾来实现]
+    public static final ItemRegistryObject<ItemModule> MODULE_ENERGY_SHIELD = ITEMS.registerModule(MekaSuitMoreModules.ENERGY_SHIELD_UNIT, Rarity.RARE);
+    //能量护盾控制器单元 龙研 （给meka套提供能量护盾）
+    public static final ItemRegistryObject<ItemModule> MODULE_ENERGY_CONTROLLER_SHIELD = ITEMS.registerModule(MekaSuitMoreModules.ENERGY_SHIELD_CONTROLLER_UNIT, Rarity.RARE);
+    //无限能量供能单元 （让MekaSuit始终充满能量）【创造物品】
+    public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_ENERGY_SUPPLY = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT, Rarity.EPIC);
+    //无限拦截救援系统单元 不再受伤【创造物品】
+    public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_INTERCEPTION_AND_RESCUE_SYSTEM_UNIT, Rarity.EPIC);
+    //无限供能单元 （让MekaSuit始终充气体/流体）【创造物品】
+    public static final ItemRegistryObject<ItemModule> MODULE_INFINITE_CHEMICAL_AND_FLUID_SUPPLY = ITEMS.registerModule(MekaSuitMoreModules.INFINITE_CHEMICAL_AND_FLUID_SUPPLY_UNIT,Rarity.EPIC);
+    //智能范围攻击单元 (WC 挂)
+    public static final ItemRegistryObject<ItemModule> MODULE_AUTOMATIC_ATTACK = ITEMS.registerModule(MekaSuitMoreModules.AUTOMATIC_ATTACK_UNIT,Rarity.EPIC);
+    //动力增强单元（增加伤害和攻击速度）
+    public static final ItemRegistryObject<ItemModule> MODULE_POWER_ENHANCEMENT = ITEMS.registerModule(MekaSuitMoreModules.POWER_ENHANCEMENT_UNIT,Rarity.EPIC);
+    //加速冷却单元(加速物品的冷却)
+    public static final ItemRegistryObject<ItemModule> MODULE_HIGH_SPEED_COOLING = ITEMS.registerModule(MekaSuitMoreModules.HIGH_SPEED_COOLING_UNIT,Rarity.EPIC);
+    //量子重建单元
+    public static final ItemRegistryObject<ItemModule> MODULE_QUANTUM_RECONSTRUCTION = ITEMS.registerModule(MekaSuitMoreModules.QUANTUM_RECONSTRUCTION_UNIT,Rarity.EPIC);
+    //生命提升单元
+    public static final ItemRegistryObject<ItemModule> MODULE_HP_BOOTS = ITEMS.registerModule(MekaSuitMoreModules.HP_BOOTS_UNIT,Rarity.EPIC);
+    //抢夺强化单元
+    public static final ItemRegistryObject<ItemModule> MODULE_LOOTING_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.LOOTING_AMPLIFICATION_UNIT, Rarity.RARE);
+    //MekaTool生产力强化单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_PERFORMANCE_AMPLIFICATION = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_PERFORMANCE_AMPLIFICATION_UNIT, Rarity.EPIC);
+    //MekaTool爆炸球发射单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_BLASTER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_BLASTER_UNIT, Rarity.EPIC);
+    //MekaTool终极反物质轨道发射单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_ANTIMATTER_STRIKE = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT, Rarity.EPIC);
+    //MekaTool液体储罐扩展单元
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_LAVA_TANK = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT, Rarity.UNCOMMON);
+    //MekaTool огнемётный модуль
+    public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
+    // SPS efficiency amplification upgrade for the dedicated SPS slot.
+    public static final ItemRegistryObject<Item> SPS_EFFICIENCY_AMPLIFICATION_UPGRADE = ITEMS.registerItem(
+            "sps_efficiency_amplification_upgrade", properties -> new Item(properties.stacksTo(1).rarity(Rarity.EPIC)));
+    // Stardust, produced by enriching a Nether Star.
+    public static final ItemRegistryObject<StardustItem> STARDUST = ITEMS.registerItem(
+            "stardust", properties -> new StardustItem(properties.rarity(Rarity.RARE)));
+    // Star Thermite, crafted from Stardust, iron dust, tin dust and osmium dust.
+    public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
+    // Solipsismium-296 powder; its recipe will be added later.
+    public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
+    // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
+    public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
+    // Hyperbolic chip, an enhanced ultimate control circuit.
+    public static final ItemRegistryObject<Item> HYPERBOLIC_CONTROL_CIRCUIT = ITEMS.register("hyperbolic_control_circuit", Rarity.EPIC);
+    public static final ItemRegistryObject<Item> BURNT_GRASS = ITEMS.registerItem(
+            "burnt_grass", properties -> new BlockItem(MoreMekaSuitModulesBlocks.BURNT_GRASS.get(), properties));
+    public static final ItemRegistryObject<Item> CHARRED_WOOD = ITEMS.registerItem(
+            "charred_wood", properties -> new BlockItem(MoreMekaSuitModulesBlocks.CHARRED_WOOD.get(), properties));
+}

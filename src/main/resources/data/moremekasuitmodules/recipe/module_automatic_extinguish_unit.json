@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FBF",
+    "AMA",
+    "CWC"
+  ],
+  "key": {
+    "A": {
+      "item": "mekanism:alloy_reinforced"
+    },
+    "B": {
+      "item": "mekanism:elite_control_circuit"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "F": {
+      "item": "minecraft:magma_cream"
+    },
+    "M": {
+      "item": "mekanism:module_base"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_automatic_extinguish_unit"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["AEA", "CMC", "PDP"],
+  "key": {
+    "A": {"item": "mekanism:pellet_polonium"},
+    "E": {"item": "minecraft:wind_charge"},
+    "C": {"tag": "c:circuits/ultimate"},
+    "M": {"item": "mekanism:module_base"},
+    "P": {"item": "minecraft:piston"},
+    "D": {"item": "minecraft:diamond_boots"}
+  },
+  "result": {"count": 1, "id": "moremekasuitmodules:module_impact_wave_unit"}
+}

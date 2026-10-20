@@ -1,0 +1,31 @@
+package moremekasuitmodules.common.content.gear;
+
+import mekanism.api.annotations.ParametersAreNotNullByDefault;
+import mekanism.api.gear.ICustomModule;
+import mekanism.api.gear.IModule;
+import moremekasuitmodules.common.MoreMekaModulesReopen;
+import net.minecraft.resources.ResourceLocation;
+
+@ParametersAreNotNullByDefault
+public record ModuleInfiniteInterceptionAndRescueSystemUnit(boolean damagesource, boolean damagesourceIndirect, boolean chunkRemove) implements ICustomModule<ModuleInfiniteInterceptionAndRescueSystemUnit> {
+
+    public static final ResourceLocation DAMAGE_SOURCE = MoreMekaModulesReopen.rl("damage_1");
+    public static final ResourceLocation DAMAGE_SOURCE_INDIRECT = MoreMekaModulesReopen.rl("damage_2");
+    public static final ResourceLocation CHUNK_REMOVE = MoreMekaModulesReopen.rl("chunk_remove");
+
+    public ModuleInfiniteInterceptionAndRescueSystemUnit(IModule<ModuleInfiniteInterceptionAndRescueSystemUnit> module) {
+        this(module.getBooleanConfigOrFalse(DAMAGE_SOURCE), module.getBooleanConfigOrFalse(DAMAGE_SOURCE_INDIRECT), module.getBooleanConfigOrFalse(CHUNK_REMOVE));
+    }
+
+    public boolean getSource() {
+        return damagesource;
+    }
+    public boolean getSourceIndirect() {
+        return damagesourceIndirect;
+    }
+
+    public boolean getChunkRemove() {
+        return chunkRemove;
+    }
+
+}

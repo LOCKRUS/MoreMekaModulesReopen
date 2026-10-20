@@ -1,0 +1,17 @@
+{
+  "type": "mekanism:nucleosynthesizing",
+  "chemical_input": {
+    "amount": 100,
+    "chemical": "mekanism:antimatter"
+  },
+  "duration": 200,
+  "item_input": {
+    "count": 1,
+    "item": "mekanism:module_excavation_escalation_unit"
+  },
+  "output": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
+  },
+  "per_tick_usage": false
+}

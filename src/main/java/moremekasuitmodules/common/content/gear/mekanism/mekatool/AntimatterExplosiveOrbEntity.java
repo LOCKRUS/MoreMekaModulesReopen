@@ -1,0 +1,602 @@
+package moremekasuitmodules.common.content.gear.mekanism.mekatool;
+
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.DustColorTransitionOptions;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
+import org.joml.Vector3f;
+
+public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
+    public static final float SPEED = 2.75F;
+    public static final float EXPLOSION_POWER = 32.0F;
+    private static final double DAMAGE_RADIUS = 40.0D;
+    // Ultra's damaging pressure wave is intentionally much larger than its crater.
+    private static final double ULTRA_DAMAGE_RADIUS = 150.0D;
+    private static final float ENTITY_DAMAGE = 240.0F;
+    private static final int ULTRA_BLOCKS_PER_TICK = 4_096;
+    private static final DustParticleOptions ANTIMATTER_PURPLE =
+            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
+    private static final DustParticleOptions ANTIMATTER_ELECTRON =
+            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 0.82F);
+    private static final DustParticleOptions ANTIMATTER_ULTRA_ELECTRON =
+            new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 1.25F);
+    private static final DustParticleOptions ANTIMATTER_WHITE =
+            new DustParticleOptions(new Vector3f(0.92F, 0.82F, 1.0F), 2.0F);
+    private static final DustColorTransitionOptions ANTIMATTER_TRAIL =
+            new DustColorTransitionOptions(
+                    new Vector3f(0.72F, 0.32F, 1.0F),
+                    new Vector3f(0.28F, 0.04F, 0.62F),
+                    1.15F);
+    private static final EntityDataAccessor<Boolean> ULTRA_MODE = SynchedEntityData.defineId(
+            AntimatterExplosiveOrbEntity.class, EntityDataSerializers.BOOLEAN);
+    /**
+     * The orb is a directed antimatter strike, not a normal physics projectile.
+     * Keep its launch velocity independent from entity-push effects supplied by
+     * shields and addon mods.
+     */
+    private Vec3 lockedVelocity;
+    private boolean ultraAftermathPending;
+    private int ultraAftermathPhase;
+    private int ultraCursorX;
+    private int ultraCursorY;
+    private int ultraCursorZ;
+
+    public AntimatterExplosiveOrbEntity(EntityType<AntimatterExplosiveOrbEntity> type, Level level) {
+        super(type, level);
+    }
+
+    public AntimatterExplosiveOrbEntity(EntityType<? extends AntimatterExplosiveOrbEntity> type, LivingEntity owner, Vec3 direction, Level level) {
+        this(type, owner, direction, level, false);
+    }
+
+    public AntimatterExplosiveOrbEntity(EntityType<? extends AntimatterExplosiveOrbEntity> type, LivingEntity owner,
+                                        Vec3 direction, Level level, boolean ultra) {
+        super(type, owner, direction, level);
+        setUltraMode(ultra);
+        lockedVelocity = direction.normalize().scale(SPEED);
+        setDeltaMovement(lockedVelocity);
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(ULTRA_MODE, false);
+    }
+
+    public boolean isUltraMode() {
+        return entityData.get(ULTRA_MODE);
+    }
+
+    private void setUltraMode(boolean ultra) {
+        entityData.set(ULTRA_MODE, ultra);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("UltraMode", isUltraMode());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        setUltraMode(tag.getBoolean("UltraMode"));
+    }
+
+    @Override
+    public void tick() {
+        if (ultraAftermathPending) {
+            if (!level().isClientSide()) {
+                tickUltraAftermath();
+            }
+            return;
+        }
+        clearFire();
+        // Restore the intended velocity before vanilla projectile logic runs.
+        // This also covers addons that write delta movement directly instead of
+        // using Entity.push(...).
+        restoreLockedVelocity();
+        super.tick();
+        // Some shield implementations apply their impulse during the tick. Do
+        // not let that impulse leak into the next tick or the networked state.
+        restoreLockedVelocity();
+        spawnFlightParticles();
+        clearFire();
+    }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public void push(Entity entity) {
+        // Antimatter orbs cannot be redirected by entity collision physics.
+    }
+
+    @Override
+    public void push(Vec3 impulse) {
+        // Antimatter orbs cannot be redirected by external impulses.
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
+        // Antimatter orbs cannot be redirected by external impulses.
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity target) {
+        // The muzzle is intentionally close to the player, so the owner must never
+        // be selected by projectile ray-tracing on the first tick.
+        return target != getOwner() && super.canHitEntity(target);
+    }
+
+    private void restoreLockedVelocity() {
+        if (lockedVelocity == null) {
+            Vec3 movement = getDeltaMovement();
+            if (movement.lengthSqr() > 1.0E-8D) {
+                lockedVelocity = movement;
+            }
+        }
+        if (lockedVelocity != null) {
+            setDeltaMovement(lockedVelocity);
+        }
+    }
+
+    /**
+     * Draws a small atomic model around the projectile. The orbit plane is
+     * constructed from the flight vector, so the electrons remain radial to
+     * the orb regardless of its direction of travel.
+     */
+    private void spawnFlightParticles() {
+        if (!level().isClientSide()) {
+            return;
+        }
+
+        Vec3 flight = getDeltaMovement();
+        if (flight.lengthSqr() < 1.0E-8D) {
+            return;
+        }
+
+        Vec3 axis = flight.normalize();
+        Vec3 reference = Math.abs(axis.y) < 0.9D ? new Vec3(0.0D, 1.0D, 0.0D)
+                : new Vec3(1.0D, 0.0D, 0.0D);
+        Vec3 orbitA = axis.cross(reference).normalize();
+        Vec3 orbitB = axis.cross(orbitA).normalize();
+
+        boolean ultra = isUltraMode();
+        int electronCount = ultra ? 3 : 2;
+        double orbitRadius = ultra ? 0.95D : 0.58D;
+        double angularSpeed = ultra ? 0.58D : 0.34D;
+        DustParticleOptions electronParticle = ultra ? ANTIMATTER_ULTRA_ELECTRON : ANTIMATTER_ELECTRON;
+        double phase = (tickCount + random.nextFloat()) * angularSpeed;
+        Vec3 center = position();
+
+        for (int i = 0; i < electronCount; i++) {
+            double angle = phase + (Math.PI * 2.0D * i / electronCount);
+            Vec3 radial = orbitA.scale(Math.cos(angle) * orbitRadius)
+                    .add(orbitB.scale(Math.sin(angle) * orbitRadius));
+            Vec3 electron = center.add(radial);
+
+            // The dense purple point is the electron itself.
+            level().addParticle(
+                    electronParticle,
+                    electron.x, electron.y, electron.z, 0.0D, 0.0D, 0.0D);
+
+            // A translucent dragon-breath particle and a fading color dust
+            // particle make the electron leave a soft light-purple trail.
+            Vec3 trailVelocity = axis.scale(-0.035D).add(radial.normalize().scale(-0.012D));
+            level().addParticle(ParticleTypes.DRAGON_BREATH,
+                    electron.x, electron.y, electron.z,
+                    trailVelocity.x, trailVelocity.y, trailVelocity.z);
+            if (ultra) {
+                level().addParticle(ANTIMATTER_TRAIL,
+                        electron.x, electron.y, electron.z,
+                        trailVelocity.x, trailVelocity.y, trailVelocity.z);
+            }
+        }
+
+        // Ultra has a denser nucleus and a stronger axial wake than Standard.
+        level().addParticle(ultra ? ANTIMATTER_WHITE : ANTIMATTER_TRAIL,
+                center.x, center.y, center.z,
+                -axis.x * (ultra ? 0.05D : 0.025D),
+                -axis.y * (ultra ? 0.05D : 0.025D),
+                -axis.z * (ultra ? 0.05D : 0.025D));
+        if (ultra) {
+            level().addParticle(ParticleTypes.DRAGON_BREATH,
+                    center.x, center.y, center.z,
+                    -axis.x * 0.08D, -axis.y * 0.08D, -axis.z * 0.08D);
+        }
+    }
+
+    @Override
+    protected void onHit(HitResult result) {
+        super.onHit(result);
+        if (!level().isClientSide()) {
+            detonate(isUltraMode());
+        }
+    }
+
+    private void detonate(boolean ultra) {
+        boolean canGrief = EventHooks.canEntityGrief(level(), this);
+        Vec3 center = position();
+
+        if (ultra) {
+            // Keep vanilla explosion visuals, while the custom pass below creates the exact
+            // 100 x 100 hemispherical crater and can spare bedrock deterministically.
+            level().explode(this, center.x, center.y, center.z, 8.0F, true, Level.ExplosionInteraction.NONE);
+            startUltraAftermath(center, canGrief);
+        } else {
+            // Standard mode uses one custom spherical 20 x 20 blast rather than
+            // many overlapping vanilla explosions. This is both deterministic and
+            // considerably cheaper for the server to process.
+            level().explode(this, center.x, center.y, center.z, 4.0F, true, Level.ExplosionInteraction.NONE);
+            createStandardSphere(center, canGrief);
+        }
+        // The Ultra wave only damages entities; it does not expand the block-destruction
+        // sphere. Damage falls off quadratically, so targets near the impact are hit
+        // much harder than targets near the 150-block outer edge.
+        double damageRadius = ultra ? ULTRA_DAMAGE_RADIUS : DAMAGE_RADIUS;
+        float maxDamage = ultra ? ENTITY_DAMAGE * 2.0F : ENTITY_DAMAGE;
+        DamageSource source = level().damageSources().explosion(this, getOwner());
+        for (Entity entity : level().getEntities(this, getBoundingBox().inflate(damageRadius),
+                entity -> entity instanceof LivingEntity && entity != getOwner())) {
+            double distance = Math.max(1.0D, distanceTo(entity));
+            double falloff = Math.max(0.0D, 1.0D - distance / damageRadius);
+            float damage = (float) (maxDamage * falloff * falloff);
+            if (damage <= 0.0F) {
+                continue;
+            }
+            entity.hurt(source, damage);
+            if (entity instanceof LivingEntity living) {
+                // The pressure/sonic wave stuns nearby living targets for 10 seconds.
+                living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 10));
+                living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 200, 4));
+                living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 80, 0));
+            }
+        }
+
+        if (level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+            // Inspired by HBM NTM's staged nuclear visual language: flash, core, rings, plume.
+            if (ultra) {
+                serverLevel.playSound(null, center.x, center.y, center.z,
+                        SoundEvents.ENDER_DRAGON_GROWL, SoundSource.HOSTILE, 16.0F, 0.45F);
+            }
+            serverLevel.playSound(null, center.x, center.y, center.z,
+                    SoundEvents.WARDEN_SONIC_BOOM, SoundSource.HOSTILE, 12.0F, 0.55F);
+            serverLevel.playSound(null, center.x, center.y, center.z,
+                    SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 8.0F, 0.55F);
+            // Unlike a normal fireball, antimatter collapses inward first and then
+            // throws out a purple-white spherical shell. The portal/smoke layers are
+            // intentionally used in addition to vanilla explosion particles so the
+            // detonation has a clearly different silhouette in-game.
+            serverLevel.sendParticles(ParticleTypes.FLASH, center.x, center.y, center.z, 1, 0, 0, 0, 0);
+            serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, center.x, center.y, center.z, 8, 3, 3, 3, 0);
+            int cloudCount = ultra ? 500 : 120;
+            int portalCount = ultra ? 900 : 180;
+            int breathCount = ultra ? 520 : 100;
+            int sparkCount = ultra ? 320 : 70;
+            int flameCount = ultra ? 260 : 40;
+            serverLevel.sendParticles(ParticleTypes.REVERSE_PORTAL, center.x, center.y, center.z, portalCount, ultra ? 13 : 5, ultra ? 11 : 5, ultra ? 13 : 5, 0.7);
+            serverLevel.sendParticles(ParticleTypes.PORTAL, center.x, center.y, center.z, ultra ? 700 : 120, ultra ? 12 : 5, ultra ? 10 : 5, ultra ? 12 : 5, 1.0);
+            serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, center.x, center.y + 2.0D, center.z, cloudCount, ultra ? 13 : 5, ultra ? 9 : 4, ultra ? 13 : 5, 0.08);
+            serverLevel.sendParticles(ParticleTypes.DRAGON_BREATH, center.x, center.y, center.z, breathCount, ultra ? 11 : 5, ultra ? 9 : 4, ultra ? 11 : 5, 0.5);
+            serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK, center.x, center.y, center.z, sparkCount, ultra ? 12 : 5, ultra ? 10 : 4, ultra ? 12 : 5, 0.7);
+            serverLevel.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, center.x, center.y, center.z, flameCount, ultra ? 10 : 4, ultra ? 10 : 4, ultra ? 10 : 4, 0.35);
+            sendShockwaveRing(serverLevel, center, 3.0D, ANTIMATTER_WHITE, ultra ? 128 : 48);
+            sendShockwaveRing(serverLevel, center, ultra ? 8.0D : 5.0D, ANTIMATTER_PURPLE, ultra ? 192 : 72);
+            sendShockwaveRing(serverLevel, center, ultra ? 16.0D : 8.0D, ANTIMATTER_PURPLE, ultra ? 288 : 96);
+            if (ultra) {
+                // The Ultra pressure shell matches the 100 x 100 crater footprint.
+                sendShockwaveRing(serverLevel, center, 32.0D, ANTIMATTER_PURPLE, 512);
+                sendShockwaveRing(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 800);
+                sendShockwaveSphere(serverLevel, center, 50.0D, ANTIMATTER_PURPLE, 1200);
+            } else {
+                // Match the 25 x 25 standard sphere without flooding clients.
+                sendShockwaveSphere(serverLevel, center, 12.0D, ANTIMATTER_PURPLE, 260);
+            }
+            serverLevel.sendParticles(ParticleTypes.CLOUD, center.x, center.y + 1.0D, center.z,
+                    ultra ? 260 : 70, ultra ? 14 : 6, 3, ultra ? 14 : 6, 0.35);
+            moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(
+                    serverLevel, center, ultra ? 128.0D : 64.0D, ultra ? 300 : 200);
+        }
+        if (!ultraAftermathPending) {
+            discard();
+        }
+    }
+
+    /**
+     * Starts the ultra aftermath without monopolizing the server thread. The old
+     * implementation scanned several million block positions in one tick.
+     */
+    private void startUltraAftermath(Vec3 center, boolean canGrief) {
+        if (!canGrief) {
+            return;
+        }
+        int centerX = (int) Math.floor(center.x);
+        int centerY = (int) Math.floor(center.y);
+        int centerZ = (int) Math.floor(center.z);
+        setPos(centerX + 0.5D, centerY + 0.5D, centerZ + 0.5D);
+        setDeltaMovement(Vec3.ZERO);
+        ultraAftermathPending = true;
+        ultraAftermathPhase = 0;
+        ultraCursorX = -50;
+        ultraCursorY = -50;
+        ultraCursorZ = -50;
+    }
+
+    private void tickUltraAftermath() {
+        int centerX = (int) Math.floor(getX());
+        int centerY = (int) Math.floor(getY());
+        int centerZ = (int) Math.floor(getZ());
+        int budget = ULTRA_BLOCKS_PER_TICK;
+        while (ultraAftermathPending && budget-- > 0) {
+            switch (ultraAftermathPhase) {
+                case 0 -> processUltraSpherePosition(centerX, centerY, centerZ, 50, false);
+                case 1 -> processUltraSpherePosition(centerX, centerY, centerZ, 75, true);
+                case 2 -> processUltraLavaPosition(centerX, centerY, centerZ);
+                case 3 -> processUltraFirePosition(centerX, centerY, centerZ);
+                default -> {
+                    ultraAftermathPending = false;
+                    discard();
+                }
+            }
+        }
+    }
+
+    private void processUltraSpherePosition(int centerX, int centerY, int centerZ, int radius, boolean scorch) {
+        int radiusSquared = radius * radius;
+        if (ultraCursorX * ultraCursorX + ultraCursorY * ultraCursorY + ultraCursorZ * ultraCursorZ <= radiusSquared) {
+            BlockPos pos = new BlockPos(centerX + ultraCursorX, centerY + ultraCursorY, centerZ + ultraCursorZ);
+            var state = level().getBlockState(pos);
+            if (!scorch && !state.isAir() && !state.is(Blocks.BEDROCK)) {
+                level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+            } else if (scorch) {
+                if (state.is(BlockTags.LEAVES)) {
+                    level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                } else if (state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)) {
+                    level().setBlock(pos,
+                            moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.CHARRED_WOOD.get().defaultBlockState(), 2);
+                } else if (state.is(Blocks.GRASS_BLOCK)) {
+                    level().setBlock(pos,
+                            moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.BURNT_GRASS.get().defaultBlockState(), 2);
+                }
+            }
+        }
+        if (!advanceUltraSphereCursor(radius)) {
+            return;
+        }
+        if (ultraAftermathPhase == 0) {
+            ultraAftermathPhase = 1;
+            ultraCursorX = -75;
+            ultraCursorY = -75;
+            ultraCursorZ = -75;
+        } else {
+            ultraAftermathPhase = 2;
+            ultraCursorX = -50;
+            ultraCursorZ = -50;
+        }
+    }
+
+    private boolean advanceUltraSphereCursor(int radius) {
+        ultraCursorZ++;
+        if (ultraCursorZ <= radius) return false;
+        ultraCursorZ = -radius;
+        ultraCursorY++;
+        if (ultraCursorY <= radius) return false;
+        ultraCursorY = -radius;
+        ultraCursorX++;
+        return ultraCursorX > radius;
+    }
+
+    private void processUltraLavaPosition(int centerX, int centerY, int centerZ) {
+        if (ultraCursorX * ultraCursorX + ultraCursorZ * ultraCursorZ <= 50 * 50 - 1) {
+            BlockPos lavaPos = new BlockPos(centerX + ultraCursorX, centerY - 49, centerZ + ultraCursorZ);
+            if (level().isEmptyBlock(lavaPos)) {
+                level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
+            }
+        }
+        ultraCursorZ++;
+        if (ultraCursorZ > 50) {
+            ultraCursorZ = -50;
+            ultraCursorX++;
+            if (ultraCursorX > 50) {
+                ultraAftermathPhase = 3;
+                ultraCursorX = -52;
+                ultraCursorZ = -52;
+            }
+        }
+    }
+
+    private void processUltraFirePosition(int centerX, int centerY, int centerZ) {
+        if (ultraCursorX * ultraCursorX + ultraCursorZ * ultraCursorZ <= 52 * 52
+                && level().random.nextInt(8) == 0) {
+            for (int dy = 52; dy >= -52; dy--) {
+                BlockPos solid = new BlockPos(centerX + ultraCursorX, centerY + dy, centerZ + ultraCursorZ);
+                BlockPos above = solid.above();
+                var solidState = level().getBlockState(solid);
+                if (!solidState.isAir() && !solidState.is(Blocks.LAVA) && level().isEmptyBlock(above)
+                        && !solidState.is(Blocks.BEDROCK)) {
+                    level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
+                    break;
+                }
+            }
+        }
+        ultraCursorZ++;
+        if (ultraCursorZ > 52) {
+            ultraCursorZ = -52;
+            ultraCursorX++;
+            if (ultraCursorX > 52) {
+                ultraAftermathPhase = 4;
+            }
+        }
+    }
+
+    /** Removes a radius-12 sphere: a 25 x 25 standard antimatter blast. */
+    private void createStandardSphere(Vec3 center, boolean canGrief) {
+        if (!(level() instanceof net.minecraft.server.level.ServerLevel)) {
+            return;
+        }
+        final int radius = 12;
+        final int centerX = (int) Math.floor(center.x);
+        final int centerY = (int) Math.floor(center.y);
+        final int centerZ = (int) Math.floor(center.z);
+        final int radiusSquared = radius * radius;
+        if (canGrief) {
+            for (int dx = -radius; dx <= radius; dx++) {
+                for (int dy = -radius; dy <= radius; dy++) {
+                    int horizontal = radiusSquared - dy * dy - dx * dx;
+                    if (horizontal < 0) {
+                        continue;
+                    }
+                    int dzLimit = (int) Math.sqrt(horizontal);
+                    for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                        BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                        var state = level().getBlockState(pos);
+                        if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
+                            level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                        }
+                    }
+                }
+            }
+        }
+        createStandardFire(centerX, centerY, centerZ);
+    }
+
+    /** Places a sparse burning layer on the newly exposed floor of Standard. */
+    private void createStandardFire(int centerX, int centerY, int centerZ) {
+        final int radius = 12;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(3) != 0) {
+                    continue;
+                }
+                for (int dy = -radius - 2; dy <= radius + 2; dy++) {
+                    BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    BlockPos above = solid.above();
+                    if (!level().getBlockState(solid).isAir() && level().isEmptyBlock(above)
+                            && !level().getBlockState(solid).is(Blocks.BEDROCK)) {
+                        level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /** Fills only the penultimate horizontal layer at the very bottom of the Ultra sphere. */
+    private void createUltraLava(int centerX, int centerY, int centerZ) {
+        final int radius = 50;
+        // A fixed Y level is intentional: do not follow each column's curved
+        // floor, otherwise the whole hemispherical cavity becomes lava-lined.
+        final int lavaY = centerY - radius + 1;
+        final int layerOffset = 1;
+        final int layerRadiusSquared = radius * radius - layerOffset * layerOffset;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                if (dx * dx + dz * dz > layerRadiusSquared) {
+                    continue;
+                }
+                BlockPos lavaPos = new BlockPos(centerX + dx, lavaY, centerZ + dz);
+                if (level().isEmptyBlock(lavaPos)
+                        && !level().getBlockState(lavaPos).is(Blocks.BEDROCK)) {
+                    level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
+                }
+            }
+        }
+    }
+
+    /** Adds the burning surface left by the Ultra detonation, like the standard blast. */
+    private void createUltraFire(int centerX, int centerY, int centerZ) {
+        final int radius = 52;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                // Fire is an aftermath accent, not a second crater-sized scan.
+                // One out of eight columns is enough visually and keeps the
+                // post-explosion server spike small.
+                if (dx * dx + dz * dz > radius * radius || level().random.nextInt(8) != 0) {
+                    continue;
+                }
+                // Search from above the impact down to the crater floor. This leaves
+                // fire on the exposed rim even when the whole central column was removed.
+                for (int dy = radius; dy >= -radius; dy--) {
+                    BlockPos solid = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    BlockPos above = solid.above();
+                    var solidState = level().getBlockState(solid);
+                    if (!solidState.isAir() && !solidState.is(Blocks.LAVA) && level().isEmptyBlock(above)
+                            && !solidState.is(Blocks.BEDROCK)) {
+                        level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * HBM-style staged detonation: the central antimatter collapse is followed by
+     * several offset shock cores. This gives the blast a deep, irregular profile
+     * instead of one ordinary spherical Minecraft explosion.
+     */
+    private void createSecondaryBlastCores(Vec3 center, boolean canGrief) {
+        double ring = 7.0D;
+        double[][] offsets = {
+                {ring, 0.0D}, {-ring, 0.0D}, {0.0D, ring}, {0.0D, -ring},
+                {ring * 0.7D, ring * 0.7D}, {-ring * 0.7D, ring * 0.7D},
+                {ring * 0.7D, -ring * 0.7D}, {-ring * 0.7D, -ring * 0.7D}
+        };
+        for (double[] offset : offsets) {
+            level().explode(this, center.x + offset[0], center.y + 1.0D, center.z + offset[1],
+                    8.0F, canGrief, Level.ExplosionInteraction.BLOCK);
+        }
+        level().explode(this, center.x, center.y + 9.0D, center.z, 7.0F,
+                canGrief, Level.ExplosionInteraction.BLOCK);
+        level().explode(this, center.x, center.y - 6.0D, center.z, 7.0F,
+                canGrief, Level.ExplosionInteraction.BLOCK);
+    }
+
+    private static void sendShockwaveRing(net.minecraft.server.level.ServerLevel level, Vec3 center,
+                                          double radius, DustParticleOptions particle, int points) {
+        for (int i = 0; i < points; i++) {
+            double angle = (Math.PI * 2.0D * i) / points;
+            double x = center.x + Math.cos(angle) * radius;
+            double z = center.z + Math.sin(angle) * radius;
+            level.sendParticles(particle, x, center.y + 0.35D, z, 1, 0, 0, 0, 0);
+            level.sendParticles(particle, x, center.y + 2.0D, z, 1, 0, 0, 0, 0);
+        }
+    }
+
+    private static void sendShockwaveSphere(net.minecraft.server.level.ServerLevel level, Vec3 center,
+                                            double radius, DustParticleOptions particle, int points) {
+        for (int i = 0; i < points; i++) {
+            double y = 1.0D - (2.0D * i / points);
+            double ringRadius = Math.sqrt(Math.max(0.0D, 1.0D - y * y));
+            double angle = i * Math.PI * (3.0D - Math.sqrt(5.0D));
+            level.sendParticles(particle,
+                    center.x + Math.cos(angle) * ringRadius * radius,
+                    center.y + y * radius,
+                    center.z + Math.sin(angle) * ringRadius * radius,
+                    1, 0, 0, 0, 0);
+        }
+    }
+}

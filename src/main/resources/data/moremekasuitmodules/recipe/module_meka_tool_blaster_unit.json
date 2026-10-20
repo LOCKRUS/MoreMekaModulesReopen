@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BSB",
+    "TAT",
+    "PVP"
+  ],
+  "key": {
+    "P": {
+      "item": "mekanism:pellet_plutonium"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "T": {
+      "item": "moremekasuitmodules:module_meka_tool_flamethrower_unit"
+    },
+    "A": {
+      "item": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
+    },
+    "V": {
+      "item": "minecraft:fire_charge"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_blaster_unit"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BAB",
+    "LML",
+    "BAB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:bucket"
+    },
+    "A": {
+      "item": "mekanism:ultimate_chemical_tank"
+    },
+    "L": {
+      "item": "mekanism:ultimate_fluid_tank"
+    },
+    "M": {
+      "item": "mekanism:module_base"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_lava_tank_unit"
+  }
+}

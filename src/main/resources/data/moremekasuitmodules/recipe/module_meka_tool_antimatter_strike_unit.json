@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "HLH",
+    "IAI",
+    "SLS"
+  ],
+  "key": {
+    "H": {
+      "item": "moremekasuitmodules:hyperbolic_control_circuit"
+    },
+    "L": {
+      "item": "mekanism:supercharged_coil"
+    },
+    "I": {
+      "item": "mekanism:ultimate_induction_provider"
+    },
+    "A": {
+      "item": "moremekasuitmodules:module_meka_tool_blaster_unit"
+    },
+    "S": {
+      "item": "moremekasuitmodules:stardust"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_meka_tool_antimatter_strike_unit"
+  }
+}

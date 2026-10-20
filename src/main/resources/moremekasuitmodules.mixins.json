@@ -1,0 +1,31 @@
+{
+  "required": true,
+  "package": "moremekasuitmodules.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "mekanism.ComponentBackedContainerAccessor",
+    "mekanism.MixinComponentBackedEnergyContainer",
+    "mekanism.MixinItemMekaSuitArmor",
+    "mekanism.MixinItemMekaTool",
+    "mekanism.MixinTileEntityModificationStation",
+    "mekanism.MixinMekanismTileContainer",
+    "mekanism.MixinSPSMultiblockData",
+    "minecraft.MixinEnchantedCountIncreaseFunction",
+    "minecraft.MixinItemUseAnimation",
+    "minecraft.MixinItemAntimatterStrike",
+    "minecraft.MixinDamageSource",
+    "minecraft.MixinLevel",
+    "minecraft.MixinMob",
+    "minecraft.MixinEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "minecraft.MixinLocalPlayer",
+    "minecraft.MixinGuiGraphicsItemDecorations"
+  ]
+}
