@@ -124,8 +124,5 @@
   "block.moremekasuitmodules.charred_wood": "Обугленная древесина",
   "description.moremekasuitmodules.capacity_amplification_unit": "Умножает ёмкость энергии любого элемента брони MekaSuit или MekaTool, в который установлен, в 10 раз.",
   "module.moremekasuitmodules.capacity_amplification_unit": "Модуль: Усилитель ёмкости",
-  "item.moremekasuitmodules.module_capacity_amplification_unit": "Усилитель ёмкости",
-  "item.moremekasuitmodules.sps_efficiency_amplification_upgrade": "Улучшение энергоэффективности SPS",
-  "description.moremekasuitmodules.sps_efficiency_amplification_upgrade": "Устанавливается в специальный слот SPS. Вдвое снижает энергопотребление SPS и вдвое увеличивает выход антиматерии.",
-  "tooltip.moremekasuitmodules.sps_efficiency_amplification_upgrade_slot": "Слот улучшения SPS"
+  "item.moremekasuitmodules.module_capacity_amplification_unit": "Усилитель ёмкости"
 }

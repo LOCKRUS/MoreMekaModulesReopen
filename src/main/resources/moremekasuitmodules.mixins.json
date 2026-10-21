@@ -8,8 +8,6 @@
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
     "mekanism.MixinTileEntityModificationStation",
-    "mekanism.MixinMekanismTileContainer",
-    "mekanism.MixinSPSMultiblockData",
     "minecraft.MixinEnchantedCountIncreaseFunction",
     "minecraft.MixinItemUseAnimation",
     "minecraft.MixinItemAntimatterStrike",
