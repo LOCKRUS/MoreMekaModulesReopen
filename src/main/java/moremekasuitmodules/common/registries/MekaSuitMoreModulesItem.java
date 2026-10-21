@@ -69,9 +69,6 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_LAVA_TANK = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_LAVA_TANK_UNIT, Rarity.UNCOMMON);
     //MekaTool огнемётный модуль
     public static final ItemRegistryObject<ItemModule> MODULE_MEKA_TOOL_FLAMETHROWER = ITEMS.registerModule(MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT, Rarity.EPIC);
-    // SPS efficiency amplification upgrade for the dedicated SPS slot.
-    public static final ItemRegistryObject<Item> SPS_EFFICIENCY_AMPLIFICATION_UPGRADE = ITEMS.registerItem(
-            "sps_efficiency_amplification_upgrade", properties -> new Item(properties.stacksTo(1).rarity(Rarity.EPIC)));
     // Stardust, produced by enriching a Nether Star.
     public static final ItemRegistryObject<StardustItem> STARDUST = ITEMS.registerItem(
             "stardust", properties -> new StardustItem(properties.rarity(Rarity.RARE)));

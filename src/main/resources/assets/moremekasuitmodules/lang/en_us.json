@@ -124,8 +124,5 @@
   "block.moremekasuitmodules.charred_wood": "Charred Wood",
   "description.moremekasuitmodules.capacity_amplification_unit": "Multiplies the energy capacity of any MekaSuit armor piece or MekaTool it is installed in by 10.",
   "module.moremekasuitmodules.capacity_amplification_unit": "Module: Capacity Amplification Unit",
-  "item.moremekasuitmodules.module_capacity_amplification_unit": "Capacity Amplification Unit",
-  "item.moremekasuitmodules.sps_efficiency_amplification_upgrade": "SPS Efficiency Amplification Upgrade",
-  "description.moremekasuitmodules.sps_efficiency_amplification_upgrade": "Installs in the dedicated SPS upgrade slot. Halves SPS energy consumption and doubles antimatter output.",
-  "tooltip.moremekasuitmodules.sps_efficiency_amplification_upgrade_slot": "SPS upgrade slot"
+  "item.moremekasuitmodules.module_capacity_amplification_unit": "Capacity Amplification Unit"
 }
