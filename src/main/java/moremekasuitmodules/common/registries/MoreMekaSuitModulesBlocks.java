@@ -4,6 +4,7 @@ import moremekasuitmodules.common.MoreMekaModulesReopen;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
@@ -15,7 +16,8 @@ public final class MoreMekaSuitModulesBlocks {
     public static final DeferredHolder<Block, Block> BURNT_GRASS = BLOCKS.register(
             "burnt_grass", () -> new Block(Block.Properties.of()
                     .strength(0.6F)
-                    .sound(SoundType.GRASS)));
+                    .sound(SoundType.GRASS)
+                    .mapColor(MapColor.COLOR_GRAY)));
 
     public static final DeferredHolder<Block, Block> CHARRED_WOOD = BLOCKS.register(
             "charred_wood", () -> new Block(Block.Properties.of()

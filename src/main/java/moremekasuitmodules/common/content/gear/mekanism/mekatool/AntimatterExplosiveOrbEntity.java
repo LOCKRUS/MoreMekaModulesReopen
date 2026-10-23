@@ -376,7 +376,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                     var state = level().getBlockState(pos);
                     if (shouldDestroyInScorch(state)) {
                         level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-                    } else if (state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)) {
+                    } else if (state.is(BlockTags.LOGS)) {
                         level().setBlock(pos,
                                 moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.CHARRED_WOOD.get().defaultBlockState(),
                                 2);
@@ -396,6 +396,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
                 || state.is(BlockTags.CROPS)
                 || state.is(BlockTags.FLOWERS)
                 || state.is(BlockTags.SAPLINGS)
+                || state.is(BlockTags.PLANKS)
                 || state.is(BlockTags.REPLACEABLE)
                 || state.is(BlockTags.CLIMBABLE)
                 || state.is(BlockTags.WOODEN_STAIRS)

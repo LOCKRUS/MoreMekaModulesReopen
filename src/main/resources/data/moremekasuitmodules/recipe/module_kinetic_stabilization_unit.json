@@ -9,7 +9,7 @@
   "key": {
     "P": { "item": "mekanism:pellet_plutonium" },
     "S": { "item": "minecraft:shield" },
-    "N": { "item": "minecraft:netherite_ingot" },
+    "N": { "item": "mekanism:alloy_atomic" },
     "M": { "item": "mekanism:module_base" },
     "A": { "item": "mekanism:alloy_atomic" },
     "O": { "item": "mekanism:block_refined_obsidian" }

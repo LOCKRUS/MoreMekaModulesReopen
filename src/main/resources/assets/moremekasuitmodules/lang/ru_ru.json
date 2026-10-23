@@ -94,7 +94,7 @@
   "module.moremekasuitmodules.impact_damage": "Урон ударной волны",
   "tooltip.moremekasuitmodules.lava_storage": "Лава: %s / %s мБ",
   "description.moremekasuitmodules.entity_display_box_unit": "Показывает на экране настраиваемые рамки, имена, дистанцию и здоровье ближайших живых существ.",
-  "module.moremekasuitmodules.entity_display_box_unit": "Модуль: рамки существ",
+  "module.moremekasuitmodules.entity_display_box_unit": "Модуль: Рамки существ",
   "module.moremekasuitmodules.entity_display_range": "Радиус обнаружения",
   "module.moremekasuitmodules.entity_display_max_boxes": "Максимальное количество рамок",
   "module.moremekasuitmodules.entity_display_health": "Отображение здоровья",
@@ -127,5 +127,5 @@
   "item.moremekasuitmodules.module_capacity_amplification_unit": "Усилитель ёмкости",
   "item.moremekasuitmodules.module_kinetic_stabilization_unit": "Модуль кинетической стабилизации",
   "description.moremekasuitmodules.kinetic_stabilization_unit": "Уменьшает отбрасывание на 25% за каждый установленный модуль. Только нагрудник, максимум четыре модуля.",
-  "module.moremekasuitmodules.kinetic_stabilization_unit": "Модуль: кинетическая стабилизация"
+  "module.moremekasuitmodules.kinetic_stabilization_unit": "Модуль: Кинетическая стабилизация"
 }

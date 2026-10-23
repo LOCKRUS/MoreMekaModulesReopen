@@ -93,7 +93,8 @@ public class MoreMekaModulesReopen implements IModModule {
 
     private void imcQueue(InterModEnqueueEvent event) {
         MekanismIMC.addModulesToAll(
-                MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT
+                MekaSuitMoreModules.INFINITE_ENERGY_SUPPLY_UNIT,
+                MekaSuitMoreModules.CAPACITY_AMPLIFICATION_UNIT
         );
         //meka套全部
         MekanismIMC.addMekaSuitModules(
