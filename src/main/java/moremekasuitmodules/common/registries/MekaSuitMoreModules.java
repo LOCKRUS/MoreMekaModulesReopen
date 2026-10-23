@@ -80,6 +80,10 @@ public class MekaSuitMoreModules {
     public static final ModuleRegistryObject<?> CAPACITY_AMPLIFICATION_UNIT = MODULES.registerMarker(
             "capacity_amplification_unit", () -> MekaSuitMoreModulesItem.MODULE_CAPACITY_AMPLIFICATION,
             builder -> builder.maxStackSize(1));
+    // Kinetic stabilization: chest-only module; each installed unit removes 25% knockback.
+    public static final ModuleRegistryObject<?> KINETIC_STABILIZATION_UNIT = MODULES.registerMarker(
+            "kinetic_stabilization_unit", () -> MekaSuitMoreModulesItem.MODULE_KINETIC_STABILIZATION,
+            builder -> builder.maxStackSize(4));
     // Показывает рамки, имена, дистанцию и здоровье живых существ на экране.
     public static final ModuleRegistryObject<ModuleEntityDisplayBoxUnit> ENTITY_DISPLAY_BOX_UNIT = MODULES.register(
             "entity_display_box_unit", ModuleEntityDisplayBoxUnit::new, () -> MekaSuitMoreModulesItem.MODULE_ENTITY_DISPLAY_BOX,

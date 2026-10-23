@@ -230,6 +230,24 @@ public class CommonPlayerTickHandler {
         }
     }
 
+    @SubscribeEvent
+    public void applyKineticStabilization(LivingKnockBackEvent event) {
+        LivingEntity entity = event.getEntity();
+        ItemStack chest = entity.getItemBySlot(EquipmentSlot.CHEST);
+        if (!(chest.getItem() instanceof IModuleContainerItem item)
+                || !item.isModuleEnabled(chest, MekaSuitMoreModules.KINETIC_STABILIZATION_UNIT)) {
+            return;
+        }
+        ModuleContainer container = ModuleHelper.get().getModuleContainer(chest);
+        if (container == null) {
+            return;
+        }
+        int installed = Math.min(4, container.installedCount(MekaSuitMoreModules.KINETIC_STABILIZATION_UNIT));
+        if (installed > 0) {
+            event.setStrength(event.getStrength() * (1.0F - installed * 0.25F));
+        }
+    }
+
 
     @SubscribeEvent  //取消所有死亡(玩家另外处理)
     public void isInfiniteModule(LivingDeathEvent event) {

@@ -21,6 +21,13 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.StainedGlassBlock;
+import net.minecraft.world.level.block.StainedGlassPaneBlock;
+import net.minecraft.world.level.block.TintedGlassBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
@@ -33,7 +40,6 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     // Ultra's damaging pressure wave is intentionally much larger than its crater.
     private static final double ULTRA_DAMAGE_RADIUS = 150.0D;
     private static final float ENTITY_DAMAGE = 240.0F;
-    private static final int ULTRA_BLOCKS_PER_TICK = 4_096;
     private static final DustParticleOptions ANTIMATTER_PURPLE =
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
     private static final DustParticleOptions ANTIMATTER_ELECTRON =
@@ -55,11 +61,6 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
      * shields and addon mods.
      */
     private Vec3 lockedVelocity;
-    private boolean ultraAftermathPending;
-    private int ultraAftermathPhase;
-    private int ultraCursorX;
-    private int ultraCursorY;
-    private int ultraCursorZ;
 
     public AntimatterExplosiveOrbEntity(EntityType<AntimatterExplosiveOrbEntity> type, Level level) {
         super(type, level);
@@ -105,12 +106,6 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
 
     @Override
     public void tick() {
-        if (ultraAftermathPending) {
-            if (!level().isClientSide()) {
-                tickUltraAftermath();
-            }
-            return;
-        }
         clearFire();
         // Restore the intended velocity before vanilla projectile logic runs.
         // This also covers addons that write delta movement directly instead of
@@ -245,7 +240,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             // Keep vanilla explosion visuals, while the custom pass below creates the exact
             // 100 x 100 hemispherical crater and can spare bedrock deterministically.
             level().explode(this, center.x, center.y, center.z, 8.0F, true, Level.ExplosionInteraction.NONE);
-            startUltraAftermath(center, canGrief);
+            createUltraCraterAftermath(center, canGrief);
         } else {
             // Standard mode uses one custom spherical 20 x 20 blast rather than
             // many overlapping vanilla explosions. This is both deterministic and
@@ -320,136 +315,130 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
             moremekasuitmodules.common.network.AntimatterShockwaveNetwork.sendNear(
                     serverLevel, center, ultra ? 128.0D : 64.0D, ultra ? 300 : 200);
         }
-        if (!ultraAftermathPending) {
-            discard();
-        }
+        discard();
     }
 
     /**
-     * Starts the ultra aftermath without monopolizing the server thread. The old
-     * implementation scanned several million block positions in one tick.
+     * Removes a radius-50 sphere (100x100 footprint) around the impact. The lower
+     * half forms the crater, while the upper half clears structures above it. The
+     * pass intentionally destroys without drops so an endgame shot cannot create
+     * hundreds of thousands of item entities. Bedrock is the one absolute exception.
      */
-    private void startUltraAftermath(Vec3 center, boolean canGrief) {
-        if (!canGrief) {
-            return;
+    private void createUltraCraterAftermath(Vec3 center, boolean canGrief) {
+        final int centerX = (int) Math.floor(center.x);
+        final int centerY = (int) Math.floor(center.y);
+        final int centerZ = (int) Math.floor(center.z);
+        if (canGrief) {
+            // The first pass is intentionally monolithic: it is the original
+            // radius-50 (100-block diameter) destruction sphere.
+            createUltraDestructionSphere(centerX, centerY, centerZ, 50);
+            // Only after the crater is complete, process the larger shell. The
+            // extra 25 blocks preserve the scorched woodland ring outside it.
+            createUltraScorchSphere(centerX, centerY, centerZ, 75);
         }
-        int centerX = (int) Math.floor(center.x);
-        int centerY = (int) Math.floor(center.y);
-        int centerZ = (int) Math.floor(center.z);
-        setPos(centerX + 0.5D, centerY + 0.5D, centerZ + 0.5D);
-        setDeltaMovement(Vec3.ZERO);
-        ultraAftermathPending = true;
-        ultraAftermathPhase = 0;
-        ultraCursorX = -50;
-        ultraCursorY = -50;
-        ultraCursorZ = -50;
+        // Fire is a visual aftermath and must not disappear merely because the
+        // world has mobGriefing disabled; block destruction remains gated above.
+        createUltraLava(centerX, centerY, centerZ);
+        createUltraFire(centerX, centerY, centerZ);
     }
 
-    private void tickUltraAftermath() {
-        int centerX = (int) Math.floor(getX());
-        int centerY = (int) Math.floor(getY());
-        int centerZ = (int) Math.floor(getZ());
-        int budget = ULTRA_BLOCKS_PER_TICK;
-        while (ultraAftermathPending && budget-- > 0) {
-            switch (ultraAftermathPhase) {
-                case 0 -> processUltraSpherePosition(centerX, centerY, centerZ, 50, false);
-                case 1 -> processUltraSpherePosition(centerX, centerY, centerZ, 75, true);
-                case 2 -> processUltraLavaPosition(centerX, centerY, centerZ);
-                case 3 -> processUltraFirePosition(centerX, centerY, centerZ);
-                default -> {
-                    ultraAftermathPending = false;
-                    discard();
-                }
-            }
-        }
-    }
-
-    private void processUltraSpherePosition(int centerX, int centerY, int centerZ, int radius, boolean scorch) {
+    private void createUltraDestructionSphere(int centerX, int centerY, int centerZ, int radius) {
         int radiusSquared = radius * radius;
-        if (ultraCursorX * ultraCursorX + ultraCursorY * ultraCursorY + ultraCursorZ * ultraCursorZ <= radiusSquared) {
-            BlockPos pos = new BlockPos(centerX + ultraCursorX, centerY + ultraCursorY, centerZ + ultraCursorZ);
-            var state = level().getBlockState(pos);
-            if (!scorch && !state.isAir() && !state.is(Blocks.BEDROCK)) {
-                level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-            } else if (scorch) {
-                if (state.is(BlockTags.LEAVES)) {
-                    level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
-                } else if (state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)) {
-                    level().setBlock(pos,
-                            moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.CHARRED_WOOD.get().defaultBlockState(), 2);
-                } else if (state.is(Blocks.GRASS_BLOCK)) {
-                    level().setBlock(pos,
-                            moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.BURNT_GRASS.get().defaultBlockState(), 2);
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int horizontal = radiusSquared - dx * dx - dy * dy;
+                if (horizontal < 0) {
+                    continue;
+                }
+                int dzLimit = (int) Math.sqrt(horizontal);
+                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    var state = level().getBlockState(pos);
+                    if (!state.isAir() && !state.is(Blocks.BEDROCK)) {
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                    }
                 }
             }
         }
-        if (!advanceUltraSphereCursor(radius)) {
-            return;
-        }
-        if (ultraAftermathPhase == 0) {
-            ultraAftermathPhase = 1;
-            ultraCursorX = -75;
-            ultraCursorY = -75;
-            ultraCursorZ = -75;
-        } else {
-            ultraAftermathPhase = 2;
-            ultraCursorX = -50;
-            ultraCursorZ = -50;
-        }
     }
 
-    private boolean advanceUltraSphereCursor(int radius) {
-        ultraCursorZ++;
-        if (ultraCursorZ <= radius) return false;
-        ultraCursorZ = -radius;
-        ultraCursorY++;
-        if (ultraCursorY <= radius) return false;
-        ultraCursorY = -radius;
-        ultraCursorX++;
-        return ultraCursorX > radius;
-    }
-
-    private void processUltraLavaPosition(int centerX, int centerY, int centerZ) {
-        if (ultraCursorX * ultraCursorX + ultraCursorZ * ultraCursorZ <= 50 * 50 - 1) {
-            BlockPos lavaPos = new BlockPos(centerX + ultraCursorX, centerY - 49, centerZ + ultraCursorZ);
-            if (level().isEmptyBlock(lavaPos)) {
-                level().setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
-            }
-        }
-        ultraCursorZ++;
-        if (ultraCursorZ > 50) {
-            ultraCursorZ = -50;
-            ultraCursorX++;
-            if (ultraCursorX > 50) {
-                ultraAftermathPhase = 3;
-                ultraCursorX = -52;
-                ultraCursorZ = -52;
-            }
-        }
-    }
-
-    private void processUltraFirePosition(int centerX, int centerY, int centerZ) {
-        if (ultraCursorX * ultraCursorX + ultraCursorZ * ultraCursorZ <= 52 * 52
-                && level().random.nextInt(8) == 0) {
-            for (int dy = 52; dy >= -52; dy--) {
-                BlockPos solid = new BlockPos(centerX + ultraCursorX, centerY + dy, centerZ + ultraCursorZ);
-                BlockPos above = solid.above();
-                var solidState = level().getBlockState(solid);
-                if (!solidState.isAir() && !solidState.is(Blocks.LAVA) && level().isEmptyBlock(above)
-                        && !solidState.is(Blocks.BEDROCK)) {
-                    level().setBlock(above, Blocks.FIRE.defaultBlockState(), 3);
-                    break;
+    private void createUltraScorchSphere(int centerX, int centerY, int centerZ, int radius) {
+        int radiusSquared = radius * radius;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dy = -radius; dy <= radius; dy++) {
+                int horizontal = radiusSquared - dx * dx - dy * dy;
+                if (horizontal < 0) {
+                    continue;
+                }
+                int dzLimit = (int) Math.sqrt(horizontal);
+                for (int dz = -dzLimit; dz <= dzLimit; dz++) {
+                    BlockPos pos = new BlockPos(centerX + dx, centerY + dy, centerZ + dz);
+                    var state = level().getBlockState(pos);
+                    if (shouldDestroyInScorch(state)) {
+                        level().setBlock(pos, Blocks.AIR.defaultBlockState(), 2);
+                    } else if (state.is(BlockTags.LOGS) || state.is(BlockTags.PLANKS)) {
+                        level().setBlock(pos,
+                                moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.CHARRED_WOOD.get().defaultBlockState(),
+                                2);
+                    } else if (state.is(Blocks.GRASS_BLOCK)) {
+                        level().setBlock(pos,
+                                moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks.BURNT_GRASS.get().defaultBlockState(),
+                                2);
+                    }
                 }
             }
         }
-        ultraCursorZ++;
-        if (ultraCursorZ > 52) {
-            ultraCursorZ = -52;
-            ultraCursorX++;
-            if (ultraCursorX > 52) {
-                ultraAftermathPhase = 4;
-            }
+    }
+
+    /** Removes scorch-ring blocks directly so plants and containers never create drops. */
+    private boolean shouldDestroyInScorch(BlockState state) {
+        if (state.is(BlockTags.LEAVES)
+                || state.is(BlockTags.CROPS)
+                || state.is(BlockTags.FLOWERS)
+                || state.is(BlockTags.SAPLINGS)
+                || state.is(BlockTags.REPLACEABLE)
+                || state.is(BlockTags.CLIMBABLE)
+                || state.is(BlockTags.WOODEN_STAIRS)
+                || state.is(BlockTags.WOODEN_SLABS)
+                || state.is(BlockTags.WOODEN_FENCES)
+                || state.is(BlockTags.WOODEN_TRAPDOORS)
+                || state.is(BlockTags.WOODEN_DOORS)
+                || state.is(BlockTags.WOODEN_BUTTONS)
+                || state.is(BlockTags.WOODEN_PRESSURE_PLATES)
+                || state.is(Blocks.CACTUS)
+                || state.is(Blocks.POTTED_CACTUS)
+                || state.is(Blocks.SUGAR_CANE)
+                || state.is(Blocks.BAMBOO)
+                || state.is(Blocks.POTTED_BAMBOO)
+                || state.is(Blocks.KELP)
+                || state.is(Blocks.KELP_PLANT)
+                || state.is(Blocks.SEAGRASS)
+                || state.is(Blocks.TALL_SEAGRASS)
+                || state.is(Blocks.VINE)
+                || state.is(Blocks.WEEPING_VINES)
+                || state.is(Blocks.WEEPING_VINES_PLANT)
+                || state.is(Blocks.TWISTING_VINES)
+                || state.is(Blocks.TWISTING_VINES_PLANT)
+                || state.is(Blocks.CAVE_VINES)
+                || state.is(Blocks.CAVE_VINES_PLANT)
+                || state.is(Blocks.GLOW_LICHEN)
+                || state.is(Blocks.LILY_PAD)
+                || state.is(Blocks.COCOA)
+                || state.is(Blocks.CHORUS_PLANT)
+                || state.is(Blocks.CHORUS_FLOWER)
+                || state.is(Blocks.SWEET_BERRY_BUSH)
+                || state.is(Blocks.GLASS)
+                || state.is(Blocks.GLASS_PANE)
+                || state.is(Blocks.TINTED_GLASS)
+                || state.getBlock() instanceof BushBlock
+                || state.getBlock() instanceof LadderBlock
+                || state.getBlock() instanceof StainedGlassBlock
+                || state.getBlock() instanceof StainedGlassPaneBlock
+                || state.getBlock() instanceof TintedGlassBlock) {
+            return true;
         }
+        // Chests and other block entities carry inventories; crafting tables do not.
+        return state.hasBlockEntity() || state.getBlock() instanceof CraftingTableBlock;
     }
 
     /** Removes a radius-12 sphere: a 25 x 25 standard antimatter blast. */

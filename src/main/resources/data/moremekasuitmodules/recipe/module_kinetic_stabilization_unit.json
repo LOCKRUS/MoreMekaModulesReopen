@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "NMN",
+    "AOA"
+  ],
+  "key": {
+    "P": { "item": "mekanism:pellet_plutonium" },
+    "S": { "item": "minecraft:shield" },
+    "N": { "item": "minecraft:netherite_ingot" },
+    "M": { "item": "mekanism:module_base" },
+    "A": { "item": "mekanism:alloy_atomic" },
+    "O": { "item": "mekanism:block_refined_obsidian" }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:module_kinetic_stabilization_unit"
+  }
+}

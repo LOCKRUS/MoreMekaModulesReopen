@@ -10,6 +10,7 @@ import mekanism.common.registration.MekanismDeferredHolder;
 import mekanism.common.registration.impl.CreativeTabDeferredRegister;
 import mekanism.common.registries.MekanismCreativeTabs;
 import mekanism.common.util.StorageUtils;
+import moremekasuitmodules.common.AntimatterStrikeActivation;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.MoreMekaSuitModulesLang;
 import moremekasuitmodules.common.config.MoreModulesConfig;
@@ -76,6 +77,10 @@ public class MekaSuitMoreModulesCreativeTabs {
                                 }
                             }
                         }
+                    }
+                    if (stack.getItem() instanceof IModuleContainerItem moduleContainerItem
+                            && moduleContainerItem.hasModule(stack, MekaSuitMoreModules.MEKA_TOOL_ANTIMATTER_STRIKE_UNIT)) {
+                        AntimatterStrikeActivation.activate(stack);
                     }
                     StorageUtils.getFilledEnergyVariant(stack);
                     MoreMekaSuitModulesUtils.addSupportedFluidsOrChemicals(stack);
