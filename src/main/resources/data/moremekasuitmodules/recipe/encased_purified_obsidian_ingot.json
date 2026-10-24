@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "POP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:glass_pane"
+    },
+    "O": {
+      "item": "mekanism:ingot_refined_obsidian"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:encased_purified_obsidian_ingot"
+  }
+}

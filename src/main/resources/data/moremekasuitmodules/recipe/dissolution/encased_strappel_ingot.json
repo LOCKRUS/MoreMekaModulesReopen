@@ -4,7 +4,7 @@
     "item": "moremekasuitmodules:encased_purified_obsidian_ingot"
   },
   "chemical_input": {
-    "amount": 100,
+    "amount": 10,
     "chemical": "moremekasuitmodules:strange_matter"
   },
   "output": {
