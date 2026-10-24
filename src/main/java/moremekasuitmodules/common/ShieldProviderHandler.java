@@ -24,6 +24,14 @@ import java.util.List;
 //护盾处理事件
 public class ShieldProviderHandler {
 
+    /**
+     * Delay between shield activations. This is intentionally separate from
+     * LivingEntity#invulnerableTime: the latter is vanilla damage immunity and
+     * can be changed by other damage sources or handlers.
+     */
+    private static final int SHIELD_RECHARGE_DELAY_TICKS = 20;
+    private static final String SHIELD_RECHARGE_DELAY_TAG = "moremekasuitmodules_shield_recharge_delay";
+
     //先计算护盾能否承受，在计算盔甲
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void onPlayerAttacked(LivingIncomingDamageEvent event) {
@@ -49,7 +57,7 @@ public class ShieldProviderHandler {
         event.setCanceled(true);
 
 
-        if ((float) player.invulnerableTime > 20 - 4) {
+        if (getShieldRechargeDelay(player) > 0) {
             return;
         }
         double newEntropy = Math.min(summery.entropy + 1 + (hitAmount / 20), 100F);
@@ -77,6 +85,7 @@ public class ShieldProviderHandler {
         }
 
         if (remainingPoints > 0) {
+            setShieldRechargeDelay(player, SHIELD_RECHARGE_DELAY_TICKS);
             player.invulnerableTime = 20;
             //如果护盾无法完全移除，则重新设置伤害
         } else if (hitAmount - totalAbsorbed > 0) {
@@ -134,7 +143,11 @@ public class ShieldProviderHandler {
     @SubscribeEvent
     public void onPlayerTick(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
-        if (player.level().isClientSide() || !hasEnabledShieldModule(player)) {
+        if (player.level().isClientSide()) {
+            return;
+        }
+        tickShieldRechargeDelay(player);
+        if (!hasEnabledShieldModule(player)) {
             return;
         }
         ArmorSummery summery = new ArmorSummery().getSummery(player);
@@ -187,10 +200,25 @@ public class ShieldProviderHandler {
             }
             stack.set(MoreMekaSuitModulesDataComponents.PROTECTION_POINTS, summery.allocation[i]);
             //  ItemDataUtils.setDouble(stack, "ProtectionPoints", summery.allocation[i]);
-            if (player.invulnerableTime <= 0) {//TODO Increase this delay (Store the delay in forge entity nbt)
+            if (getShieldRechargeDelay(player) <= 0) {
                 stack.set(MoreMekaSuitModulesDataComponents.SHIELD_ENTROPY, summery.entropy);
                 //         ItemDataUtils.setDouble(stack, "ShieldEntropy", summery.entropy);
             }
+        }
+    }
+
+    private static int getShieldRechargeDelay(Player player) {
+        return player.getPersistentData().getInt(SHIELD_RECHARGE_DELAY_TAG);
+    }
+
+    private static void setShieldRechargeDelay(Player player, int delay) {
+        player.getPersistentData().putInt(SHIELD_RECHARGE_DELAY_TAG, Math.max(0, delay));
+    }
+
+    private static void tickShieldRechargeDelay(Player player) {
+        int delay = getShieldRechargeDelay(player);
+        if (delay > 0) {
+            setShieldRechargeDelay(player, delay - 1);
         }
     }
 

@@ -103,9 +103,35 @@
   "module.moremekasuitmodules.entity_display_distance_color": "Колір відстані",
   "module.moremekasuitmodules.hyper_armor_solid_hitbox": "Твердий хітбокс",
   "chemical.moremekasuitmodules.solipsismium": "Соліпсизмiй",
-  "item.moremekasuitmodules.alloy_otherworldly": "Потойбічний сплав"
-  ,"item.moremekasuitmodules.antimatter_strike_disabled": "Вимкнено"
-  ,"item.moremekasuitmodules.antimatter_strike_active": "Активний"
-  ,"block.moremekasuitmodules.burnt_grass": "Згорілий ґрунт"
-  ,"block.moremekasuitmodules.charred_wood": "Обвуглена деревина"
+  "item.moremekasuitmodules.alloy_otherworldly": "Потойбічний сплав",
+  "item.moremekasuitmodules.antimatter_strike_disabled": "Вимкнено",
+  "item.moremekasuitmodules.antimatter_strike_active": "Активний",
+  "block.moremekasuitmodules.burnt_grass": "Згорілий ґрунт",
+  "block.moremekasuitmodules.charred_wood": "Обвуглена деревина",
+  "advancements.moremekasuitmodules.solipsismium.title": "Менделєєв у шоці",
+  "advancements.moremekasuitmodules.solipsismium.description": "Створіть новий хімічний елемент",
+  "advancements.moremekasuitmodules.antimatter_strike.title": "Кінець прийшов",
+  "advancements.moremekasuitmodules.antimatter_strike.description": "Схоже, ти справді крутий",
+  "advancements.moremekasuitmodules.divine_collector.title": "Божественний колекціонер",
+  "advancements.moremekasuitmodules.divine_collector.description": "Створіть усі доступні модулі Mekanism, MekaTool і MekaSuit",
+  "description.moremekasuitmodules.capacity_amplification_unit": "Збільшує місткість енергетичних контейнерів.",
+  "description.moremekasuitmodules.hyper_armor_unit": "Посилює броню та зменшує отриману шкоду.",
+  "description.moremekasuitmodules.kinetic_stabilization_unit": "Кожен рівень модуля зменшує відкидання гравця на 25%.",
+  "description.moremekasuitmodules.meka_tool_flamethrower_unit": "Випускає полум’я перед собою.",
+  "item.moremekasuitmodules.hyperbolic_control_circuit": "Гіперболічна схема керування",
+  "item.moremekasuitmodules.module_capacity_amplification_unit": "Модуль посилення місткості",
+  "item.moremekasuitmodules.module_hyper_armor_unit": "Модуль гіперброні",
+  "item.moremekasuitmodules.module_kinetic_stabilization_unit": "Модуль кінетичної стабілізації",
+  "item.moremekasuitmodules.solipsismium_296": "Порошок соліпсизмiю",
+  "item.moremekasuitmodules.star_thermite": "Зоряний терміт",
+  "item.moremekasuitmodules.stardust": "Зоряний пил",
+  "module.moremekasuitmodules.capacity_amplification_unit": "Модуль посилення місткості",
+  "module.moremekasuitmodules.flamethrower_mode": "Режим вогнемета",
+  "module.moremekasuitmodules.flamethrower_mode.combat": "Бойовий",
+  "module.moremekasuitmodules.flamethrower_mode.heat": "Нагрівання",
+  "module.moremekasuitmodules.flamethrower_mode.inferno": "Пекельний",
+  "module.moremekasuitmodules.hyper_armor_unit": "Модуль гіперброні",
+  "module.moremekasuitmodules.kinetic_stabilization_unit": "Модуль кінетичної стабілізації",
+  "module.moremekasuitmodules.meka_tool_flamethrower_mode_hud": "Режим вогнемета: %1$s",
+  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Модуль вогнемета MekaTool"
 }

@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.DustColorTransitionOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -14,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +31,7 @@ import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.TintedGlassBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.joml.Vector3f;
@@ -40,6 +43,7 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
     // Ultra's damaging pressure wave is intentionally much larger than its crater.
     private static final double ULTRA_DAMAGE_RADIUS = 150.0D;
     private static final float ENTITY_DAMAGE = 240.0F;
+    private static final float ULTRA_COLLISION_DAMAGE = 1000.0F;
     private static final DustParticleOptions ANTIMATTER_PURPLE =
             new DustParticleOptions(new Vector3f(0.48F, 0.04F, 0.95F), 2.8F);
     private static final DustParticleOptions ANTIMATTER_ELECTRON =
@@ -230,6 +234,22 @@ public class AntimatterExplosiveOrbEntity extends AbstractHurtingProjectile {
         if (!level().isClientSide()) {
             detonate(isUltraMode());
         }
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult result) {
+        if (isUltraMode() && result.getEntity() instanceof LivingEntity living
+                && living != getOwner() && !level().isClientSide()) {
+            // OUT_OF_WORLD carries the vanilla bypass-armor damage tag. The orb
+            // and its owner are still preserved for attribution and shield hooks.
+            DamageSource source = new DamageSource(
+                    level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                            .getHolderOrThrow(DamageTypes.FELL_OUT_OF_WORLD),
+                    getOwner(), this);
+            living.hurt(source, ULTRA_COLLISION_DAMAGE);
+            return;
+        }
+        super.onHitEntity(result);
     }
 
     private void detonate(boolean ultra) {
