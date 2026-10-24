@@ -131,5 +131,7 @@
   "advancements.moremekasuitmodules.solipsismium.title": "Mendeleev Is Shocked",
   "advancements.moremekasuitmodules.solipsismium.description": "Create a new chemical element",
   "advancements.moremekasuitmodules.antimatter_strike.title": "The End Has Come",
-  "advancements.moremekasuitmodules.antimatter_strike.description": "You must be really cool"
+  "advancements.moremekasuitmodules.antimatter_strike.description": "You must be really cool",
+  "advancements.moremekasuitmodules.divine_collector.title": "Divine Collector",
+  "advancements.moremekasuitmodules.divine_collector.description": "Craft every available Mekanism, MekaTool and MekaSuit module"
 }

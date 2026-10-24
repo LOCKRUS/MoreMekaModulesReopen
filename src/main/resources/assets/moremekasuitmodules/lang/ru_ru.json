@@ -131,5 +131,7 @@
   "advancements.moremekasuitmodules.solipsismium.title": "Менделеев в шоке",
   "advancements.moremekasuitmodules.solipsismium.description": "Создайте новый химический элемент",
   "advancements.moremekasuitmodules.antimatter_strike.title": "Пришел конец",
-  "advancements.moremekasuitmodules.antimatter_strike.description": "Видать ты очень крут"
+  "advancements.moremekasuitmodules.antimatter_strike.description": "Видать ты очень крут",
+  "advancements.moremekasuitmodules.divine_collector.title": "Божественный коллекционер",
+  "advancements.moremekasuitmodules.divine_collector.description": "Создайте все доступные модули Mekanism, MekaTool и MekaSuit"
 }

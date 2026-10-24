@@ -1,0 +1,528 @@
+{
+  "parent": "mekanism:mekasuit",
+  "criteria": {
+    "craft_mekanism_module_attack_amplification_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_attack_amplification_unit"
+      }
+    },
+    "craft_mekanism_module_blasting_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_blasting_unit"
+      }
+    },
+    "craft_mekanism_module_charge_distribution_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_charge_distribution_unit"
+      }
+    },
+    "craft_mekanism_module_color_modulation_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_color_modulation_unit"
+      }
+    },
+    "craft_mekanism_module_dosimeter_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_dosimeter_unit"
+      }
+    },
+    "craft_mekanism_module_electrolytic_breathing_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_electrolytic_breathing_unit"
+      }
+    },
+    "craft_mekanism_module_elytra_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_elytra_unit"
+      }
+    },
+    "craft_mekanism_module_energy_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_energy_unit"
+      }
+    },
+    "craft_mekanism_module_excavation_escalation_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_excavation_escalation_unit"
+      }
+    },
+    "craft_mekanism_module_farming_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_farming_unit"
+      }
+    },
+    "craft_mekanism_module_fortune_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_fortune_unit"
+      }
+    },
+    "craft_mekanism_module_frost_walker_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_frost_walker_unit"
+      }
+    },
+    "craft_mekanism_module_geiger_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_geiger_unit"
+      }
+    },
+    "craft_mekanism_module_gravitational_modulating_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_gravitational_modulating_unit"
+      }
+    },
+    "craft_mekanism_module_gyroscopic_stabilization_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_gyroscopic_stabilization_unit"
+      }
+    },
+    "craft_mekanism_module_hydraulic_propulsion_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_hydraulic_propulsion_unit"
+      }
+    },
+    "craft_mekanism_module_hydrostatic_repulsor_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_hydrostatic_repulsor_unit"
+      }
+    },
+    "craft_mekanism_module_inhalation_purification_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_inhalation_purification_unit"
+      }
+    },
+    "craft_mekanism_module_jetpack_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_jetpack_unit"
+      }
+    },
+    "craft_mekanism_module_laser_dissipation_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_laser_dissipation_unit"
+      }
+    },
+    "craft_mekanism_module_locomotive_boosting_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_locomotive_boosting_unit"
+      }
+    },
+    "craft_mekanism_module_magnetic_attraction_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_magnetic_attraction_unit"
+      }
+    },
+    "craft_mekanism_module_motorized_servo_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_motorized_servo_unit"
+      }
+    },
+    "craft_mekanism_module_nutritional_injection_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_nutritional_injection_unit"
+      }
+    },
+    "craft_mekanism_module_radiation_shielding_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_radiation_shielding_unit"
+      }
+    },
+    "craft_mekanism_module_shearing_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_shearing_unit"
+      }
+    },
+    "craft_mekanism_module_silk_touch_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_silk_touch_unit"
+      }
+    },
+    "craft_mekanism_module_soul_surfer_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_soul_surfer_unit"
+      }
+    },
+    "craft_mekanism_module_teleportation_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_teleportation_unit"
+      }
+    },
+    "craft_mekanism_module_vein_mining_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_vein_mining_unit"
+      }
+    },
+    "craft_mekanism_module_vision_enhancement_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "mekanism:module_vision_enhancement_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_advanced_interception_system_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_advanced_interception_system_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_automatic_attack_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_automatic_attack_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_automatic_extinguish_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_automatic_extinguish_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_capacity_amplification_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_capacity_amplification_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_counterattack_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_counterattack_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_emergency_rescue_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_emergency_rescue_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_energy_shield_controller_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_energy_shield_controller_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_energy_shield_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_energy_shield_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_entity_display_box_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_entity_display_box_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_health_regeneration_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_health_regeneration_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_high_speed_cooling_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_high_speed_cooling_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_hp_boots_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_hp_boots_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_hyper_armor_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_hyper_armor_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_impact_wave_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_impact_wave_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_insulated_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_insulated_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_kinetic_stabilization_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_kinetic_stabilization_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_looting_amplification_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_looting_amplification_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_meka_tool_antimatter_strike_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_antimatter_strike_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_meka_tool_blaster_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_blaster_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_meka_tool_flamethrower_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_flamethrower_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_meka_tool_lava_tank_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_lava_tank_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_meka_tool_performance_amplification_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_performance_amplification_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_power_enhancement_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_power_enhancement_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_quantum_reconstruction_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_quantum_reconstruction_unit"
+      }
+    },
+    "craft_moremekasuitmodules_module_wall_cling_unit": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_wall_cling_unit"
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "mekanism:mekasuit_bodyarmor",
+      "count": 1
+    },
+    "title": {
+      "translate": "advancements.moremekasuitmodules.divine_collector.title"
+    },
+    "description": {
+      "translate": "advancements.moremekasuitmodules.divine_collector.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "craft_mekanism_module_attack_amplification_unit"
+    ],
+    [
+      "craft_mekanism_module_blasting_unit"
+    ],
+    [
+      "craft_mekanism_module_charge_distribution_unit"
+    ],
+    [
+      "craft_mekanism_module_color_modulation_unit"
+    ],
+    [
+      "craft_mekanism_module_dosimeter_unit"
+    ],
+    [
+      "craft_mekanism_module_electrolytic_breathing_unit"
+    ],
+    [
+      "craft_mekanism_module_elytra_unit"
+    ],
+    [
+      "craft_mekanism_module_energy_unit"
+    ],
+    [
+      "craft_mekanism_module_excavation_escalation_unit"
+    ],
+    [
+      "craft_mekanism_module_farming_unit"
+    ],
+    [
+      "craft_mekanism_module_fortune_unit"
+    ],
+    [
+      "craft_mekanism_module_frost_walker_unit"
+    ],
+    [
+      "craft_mekanism_module_geiger_unit"
+    ],
+    [
+      "craft_mekanism_module_gravitational_modulating_unit"
+    ],
+    [
+      "craft_mekanism_module_gyroscopic_stabilization_unit"
+    ],
+    [
+      "craft_mekanism_module_hydraulic_propulsion_unit"
+    ],
+    [
+      "craft_mekanism_module_hydrostatic_repulsor_unit"
+    ],
+    [
+      "craft_mekanism_module_inhalation_purification_unit"
+    ],
+    [
+      "craft_mekanism_module_jetpack_unit"
+    ],
+    [
+      "craft_mekanism_module_laser_dissipation_unit"
+    ],
+    [
+      "craft_mekanism_module_locomotive_boosting_unit"
+    ],
+    [
+      "craft_mekanism_module_magnetic_attraction_unit"
+    ],
+    [
+      "craft_mekanism_module_motorized_servo_unit"
+    ],
+    [
+      "craft_mekanism_module_nutritional_injection_unit"
+    ],
+    [
+      "craft_mekanism_module_radiation_shielding_unit"
+    ],
+    [
+      "craft_mekanism_module_shearing_unit"
+    ],
+    [
+      "craft_mekanism_module_silk_touch_unit"
+    ],
+    [
+      "craft_mekanism_module_soul_surfer_unit"
+    ],
+    [
+      "craft_mekanism_module_teleportation_unit"
+    ],
+    [
+      "craft_mekanism_module_vein_mining_unit"
+    ],
+    [
+      "craft_mekanism_module_vision_enhancement_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_advanced_interception_system_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_automatic_attack_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_automatic_extinguish_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_capacity_amplification_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_counterattack_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_emergency_rescue_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_energy_shield_controller_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_energy_shield_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_entity_display_box_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_health_regeneration_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_high_speed_cooling_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_hp_boots_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_hyper_armor_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_impact_wave_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_insulated_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_kinetic_stabilization_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_looting_amplification_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_meka_tool_antimatter_strike_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_meka_tool_blaster_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_meka_tool_flamethrower_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_meka_tool_lava_tank_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_meka_tool_performance_amplification_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_power_enhancement_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_quantum_reconstruction_unit"
+    ],
+    [
+      "craft_moremekasuitmodules_module_wall_cling_unit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
