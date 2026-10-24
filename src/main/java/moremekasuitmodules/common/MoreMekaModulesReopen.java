@@ -14,6 +14,7 @@ import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesChemicals;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesEffects;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
@@ -58,6 +59,7 @@ public class MoreMekaModulesReopen implements IModModule {
         MoreMekaSuitModulesChemicals.CHEMICALS.register(modEventBus);
         MoreMekaSuitModulesSounds.SOUND_EVENTS.register(modEventBus);
         MoreMekaSuitModulesBlocks.BLOCKS.register(modEventBus);
+        MoreMekaSuitModulesEffects.MOB_EFFECTS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded.isLoaded()) {
 
@@ -148,6 +150,7 @@ public class MoreMekaModulesReopen implements IModModule {
         NeoForge.EVENT_BUS.register(new ImpactWaveHandler());
         NeoForge.EVENT_BUS.register(new HyperArmorHandler());
         NeoForge.EVENT_BUS.register(new StrangletActivationHandler());
+        NeoForge.EVENT_BUS.register(new StrangletExposureHandler());
     }
 
     @Override

@@ -12,6 +12,7 @@
     "minecraft.MixinItemUseAnimation",
     "minecraft.MixinItemAntimatterStrike",
     "minecraft.MixinDamageSource",
+    "minecraft.MixinServerPlayer",
     "minecraft.MixinLevel",
     "minecraft.MixinMob",
     "minecraft.MixinEntity"

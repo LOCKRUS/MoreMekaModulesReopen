@@ -84,7 +84,7 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<Item> HYPERBOLIC_CONTROL_CIRCUIT = ITEMS.register("hyperbolic_control_circuit", Rarity.EPIC);
     // Encased purified obsidian ingot, the input material for the Strappel alloy.
     public static final ItemRegistryObject<Item> ENCASED_PURIFIED_OBSIDIAN_INGOT = ITEMS.register(
-            "encased_purified_obsidian_ingot", Rarity.EPIC);
+            "encased_purified_obsidian_ingot", Rarity.COMMON);
     // Encased Strappel ingot, produced in the Chemical Dissolution Chamber.
     public static final ItemRegistryObject<Item> ENCASED_STRAPPEL_INGOT = ITEMS.register(
             "encased_strappel_ingot", Rarity.EPIC);

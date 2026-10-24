@@ -139,5 +139,8 @@
   "item.moremekasuitmodules.encased_strappel_ingot": "Encased Strappel Ingot",
   "chemical.moremekasuitmodules.molten_strappel_mixture": "Molten Strappel Mixture",
   "block.moremekasuitmodules.stranglet": "Stranglet",
-  "item.moremekasuitmodules.stranglet": "Stranglet"
+  "item.moremekasuitmodules.stranglet": "Stranglet",
+  "effect.moremekasuitmodules.atomic_fission": "Atomic Fission",
+  "death.moremekasuitmodules.atomic_fission.split": "%1$s was split into atoms",
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s disintegrated"
 }

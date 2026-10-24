@@ -17,23 +17,18 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  * allowing it to consume ordinary terrain and structures.
  */
 public class StrangletBlock extends Block {
-    private static final int SPREAD_CHANCE = 3;
-
     public StrangletBlock(BlockBehaviour.Properties properties) {
         super(properties.randomTicks());
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (random.nextInt(SPREAD_CHANCE) != 0) {
-            return;
-        }
-
-        Direction direction = Direction.values()[random.nextInt(Direction.values().length)];
-        BlockPos target = pos.relative(direction);
-        BlockState targetState = level.getBlockState(target);
-        if (canCapture(level, target, targetState)) {
-            level.setBlock(target, defaultBlockState(), Block.UPDATE_ALL);
+        for (Direction direction : Direction.values()) {
+            BlockPos target = pos.relative(direction);
+            BlockState targetState = level.getBlockState(target);
+            if (canCapture(level, target, targetState)) {
+                level.setBlock(target, defaultBlockState(), Block.UPDATE_ALL);
+            }
         }
     }
 

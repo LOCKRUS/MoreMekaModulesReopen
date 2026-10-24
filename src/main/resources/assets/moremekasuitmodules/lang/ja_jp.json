@@ -139,5 +139,8 @@
   "item.moremekasuitmodules.encased_strappel_ingot": "封入ストラペルインゴット",
   "chemical.moremekasuitmodules.molten_strappel_mixture": "溶融ストラペル混合物",
   "block.moremekasuitmodules.stranglet": "ストラングレット",
-  "item.moremekasuitmodules.stranglet": "ストラングレット"
+  "item.moremekasuitmodules.stranglet": "ストラングレット",
+  "effect.moremekasuitmodules.atomic_fission": "原子分裂",
+  "death.moremekasuitmodules.atomic_fission.split": "%1$sは原子に分解された",
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$sは崩壊した"
 }

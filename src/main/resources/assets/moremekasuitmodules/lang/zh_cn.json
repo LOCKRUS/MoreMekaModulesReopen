@@ -139,5 +139,8 @@
   "item.moremekasuitmodules.encased_strappel_ingot": "封装的斯特拉佩尔锭",
   "chemical.moremekasuitmodules.molten_strappel_mixture": "熔融斯特拉佩尔混合物",
   "block.moremekasuitmodules.stranglet": "斯特朗格莱特",
-  "item.moremekasuitmodules.stranglet": "斯特朗格莱特"
+  "item.moremekasuitmodules.stranglet": "斯特朗格莱特",
+  "effect.moremekasuitmodules.atomic_fission": "原子裂解",
+  "death.moremekasuitmodules.atomic_fission.split": "%1$s被裂解成原子",
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s发生了分解"
 }

@@ -139,5 +139,8 @@
   "item.moremekasuitmodules.encased_strappel_ingot": "Інкапсульований страпелевий злиток",
   "chemical.moremekasuitmodules.molten_strappel_mixture": "Розплавлена страпелева суміш",
   "block.moremekasuitmodules.stranglet": "Странглет",
-  "item.moremekasuitmodules.stranglet": "Странглет"
+  "item.moremekasuitmodules.stranglet": "Странглет",
+  "effect.moremekasuitmodules.atomic_fission": "Атомне розщеплення",
+  "death.moremekasuitmodules.atomic_fission.split": "%1$s був розщеплений на атоми",
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s дезінтегрувався"
 }
