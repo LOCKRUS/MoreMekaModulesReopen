@@ -1,0 +1,33 @@
+{
+  "parent": "moremekasuitmodules:solipsismium",
+  "criteria": {
+    "craft_antimatter_strike": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:module_meka_tool_antimatter_strike_unit"
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "moremekasuitmodules:module_meka_tool_antimatter_strike_unit",
+      "count": 1
+    },
+    "title": {
+      "translate": "advancements.moremekasuitmodules.antimatter_strike.title"
+    },
+    "description": {
+      "translate": "advancements.moremekasuitmodules.antimatter_strike.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "craft_antimatter_strike"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

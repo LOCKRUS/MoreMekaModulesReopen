@@ -1,0 +1,33 @@
+{
+  "parent": "mekanism:nucleosynthesizer",
+  "criteria": {
+    "craft_solipsismium": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "moremekasuitmodules:solipsismium_296"
+      }
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "moremekasuitmodules:solipsismium_296",
+      "count": 1
+    },
+    "title": {
+      "translate": "advancements.moremekasuitmodules.solipsismium.title"
+    },
+    "description": {
+      "translate": "advancements.moremekasuitmodules.solipsismium.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "craft_solipsismium"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

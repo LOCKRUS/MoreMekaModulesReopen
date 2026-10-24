@@ -127,5 +127,9 @@
   "item.moremekasuitmodules.module_capacity_amplification_unit": "Capacity Amplification Unit",
   "item.moremekasuitmodules.module_kinetic_stabilization_unit": "Kinetic Stabilization Unit",
   "description.moremekasuitmodules.kinetic_stabilization_unit": "Reduces incoming knockback by 25% per installed unit. Chest armor only; up to four units.",
-  "module.moremekasuitmodules.kinetic_stabilization_unit": "Module: Kinetic Stabilization Unit"
+  "module.moremekasuitmodules.kinetic_stabilization_unit": "Module: Kinetic Stabilization Unit",
+  "advancements.moremekasuitmodules.solipsismium.title": "Mendeleev Is Shocked",
+  "advancements.moremekasuitmodules.solipsismium.description": "Create a new chemical element",
+  "advancements.moremekasuitmodules.antimatter_strike.title": "The End Has Come",
+  "advancements.moremekasuitmodules.antimatter_strike.description": "You must be really cool"
 }
