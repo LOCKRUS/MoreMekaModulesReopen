@@ -133,5 +133,11 @@
   "module.moremekasuitmodules.hyper_armor_unit": "Модуль гіперброні",
   "module.moremekasuitmodules.kinetic_stabilization_unit": "Модуль кінетичної стабілізації",
   "module.moremekasuitmodules.meka_tool_flamethrower_mode_hud": "Режим вогнемета: %1$s",
-  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Модуль вогнемета MekaTool"
+  "module.moremekasuitmodules.meka_tool_flamethrower_unit": "Модуль вогнемета MekaTool",
+  "chemical.moremekasuitmodules.strange_matter": "Дивна матерія",
+  "item.moremekasuitmodules.encased_purified_obsidian_ingot": "Інкапсульований очищений обсидіановий злиток",
+  "item.moremekasuitmodules.encased_strappel_ingot": "Інкапсульований страпелевий злиток",
+  "chemical.moremekasuitmodules.molten_strappel_mixture": "Розплавлена страпелева суміш",
+  "block.moremekasuitmodules.stranglet": "Странглет",
+  "item.moremekasuitmodules.stranglet": "Странглет"
 }

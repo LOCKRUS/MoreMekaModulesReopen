@@ -1,0 +1,11 @@
+{
+  "type": "mekanism:centrifuging",
+  "input": {
+    "amount": 10,
+    "chemical": "moremekasuitmodules:strange_matter"
+  },
+  "output": {
+    "amount": 1,
+    "id": "moremekasuitmodules:solipsismium"
+  }
+}

@@ -76,14 +76,22 @@ public class MekaSuitMoreModulesItem {
             "stardust", properties -> new StardustItem(properties.rarity(Rarity.RARE)));
     // Star Thermite, crafted from Stardust, iron dust, tin dust and osmium dust.
     public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
-    // Solipsismium-296 powder; its recipe will be added later.
+    // Solipsismium-296 powder.
     public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
     // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
     public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
     // Hyperbolic chip, an enhanced ultimate control circuit.
     public static final ItemRegistryObject<Item> HYPERBOLIC_CONTROL_CIRCUIT = ITEMS.register("hyperbolic_control_circuit", Rarity.EPIC);
+    // Encased purified obsidian ingot, the input material for the Strappel alloy.
+    public static final ItemRegistryObject<Item> ENCASED_PURIFIED_OBSIDIAN_INGOT = ITEMS.register(
+            "encased_purified_obsidian_ingot", Rarity.EPIC);
+    // Encased Strappel ingot, produced in the Chemical Dissolution Chamber.
+    public static final ItemRegistryObject<Item> ENCASED_STRAPPEL_INGOT = ITEMS.register(
+            "encased_strappel_ingot", Rarity.EPIC);
     public static final ItemRegistryObject<Item> BURNT_GRASS = ITEMS.registerItem(
             "burnt_grass", properties -> new BlockItem(MoreMekaSuitModulesBlocks.BURNT_GRASS.get(), properties));
     public static final ItemRegistryObject<Item> CHARRED_WOOD = ITEMS.registerItem(
             "charred_wood", properties -> new BlockItem(MoreMekaSuitModulesBlocks.CHARRED_WOOD.get(), properties));
+    public static final ItemRegistryObject<Item> STRANGLET = ITEMS.registerItem(
+            "stranglet", properties -> new BlockItem(MoreMekaSuitModulesBlocks.STRANGLET.get(), properties.rarity(Rarity.EPIC)));
 }

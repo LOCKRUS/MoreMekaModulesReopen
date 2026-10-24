@@ -1,6 +1,7 @@
 package moremekasuitmodules.common.registries;
 
 import moremekasuitmodules.common.MoreMekaModulesReopen;
+import moremekasuitmodules.common.block.StrangletBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -23,6 +24,12 @@ public final class MoreMekaSuitModulesBlocks {
             "charred_wood", () -> new Block(Block.Properties.of()
                     .strength(2.0F)
                     .sound(SoundType.WOOD)));
+
+    public static final DeferredHolder<Block, Block> STRANGLET = BLOCKS.register(
+            "stranglet", () -> new StrangletBlock(Block.Properties.of()
+                    .strength(0.8F)
+                    .sound(SoundType.SLIME_BLOCK)
+                    .mapColor(MapColor.COLOR_GRAY)));
 
     private MoreMekaSuitModulesBlocks() {
     }

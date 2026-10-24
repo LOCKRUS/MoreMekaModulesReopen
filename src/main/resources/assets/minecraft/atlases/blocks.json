@@ -3,6 +3,10 @@
     {
       "type": "minecraft:single",
       "resource": "moremekasuitmodules:infuse_type/solipsismium"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "moremekasuitmodules:gas/strange_matter"
     }
   ]
 }

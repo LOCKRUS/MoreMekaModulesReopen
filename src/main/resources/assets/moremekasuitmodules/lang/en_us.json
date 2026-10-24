@@ -133,5 +133,11 @@
   "advancements.moremekasuitmodules.antimatter_strike.title": "The End Has Come",
   "advancements.moremekasuitmodules.antimatter_strike.description": "You must be really cool",
   "advancements.moremekasuitmodules.divine_collector.title": "Divine Collector",
-  "advancements.moremekasuitmodules.divine_collector.description": "Craft every available Mekanism, MekaTool and MekaSuit module"
+  "advancements.moremekasuitmodules.divine_collector.description": "Craft every available Mekanism, MekaTool and MekaSuit module",
+  "chemical.moremekasuitmodules.strange_matter": "Strange Matter",
+  "item.moremekasuitmodules.encased_purified_obsidian_ingot": "Encased Purified Obsidian Ingot",
+  "item.moremekasuitmodules.encased_strappel_ingot": "Encased Strappel Ingot",
+  "chemical.moremekasuitmodules.molten_strappel_mixture": "Molten Strappel Mixture",
+  "block.moremekasuitmodules.stranglet": "Stranglet",
+  "item.moremekasuitmodules.stranglet": "Stranglet"
 }

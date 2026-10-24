@@ -133,5 +133,11 @@
   "advancements.moremekasuitmodules.antimatter_strike.title": "Пришел конец",
   "advancements.moremekasuitmodules.antimatter_strike.description": "Видать ты очень крут",
   "advancements.moremekasuitmodules.divine_collector.title": "Божественный коллекционер",
-  "advancements.moremekasuitmodules.divine_collector.description": "Создайте все доступные модули Mekanism, MekaTool и MekaSuit"
+  "advancements.moremekasuitmodules.divine_collector.description": "Создайте все доступные модули Mekanism, MekaTool и MekaSuit",
+  "chemical.moremekasuitmodules.strange_matter": "Странная материя",
+  "item.moremekasuitmodules.encased_purified_obsidian_ingot": "Заключённый очищенный слиток обсидиана",
+  "item.moremekasuitmodules.encased_strappel_ingot": "Заключённый страпельный слиток",
+  "chemical.moremekasuitmodules.molten_strappel_mixture": "Расплавленная страпельная смесь",
+  "block.moremekasuitmodules.stranglet": "Странглет",
+  "item.moremekasuitmodules.stranglet": "Странглет"
 }

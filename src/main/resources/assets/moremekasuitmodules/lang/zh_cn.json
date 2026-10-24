@@ -133,5 +133,11 @@
   "module.moremekasuitmodules.meka_tool_performance_amplification_unit": "MekaTool：性能增幅模块",
   "module.moremekasuitmodules.meka_tool_performance_multiplier_hud": "MekaTool 性能倍率：×%1$s",
   "module.moremekasuitmodules.wall_cling_unit": "攀墙模块",
-  "tooltip.moremekasuitmodules.lava_storage": "熔岩：%s / %s mB"
+  "tooltip.moremekasuitmodules.lava_storage": "熔岩：%s / %s mB",
+  "chemical.moremekasuitmodules.strange_matter": "奇异物质",
+  "item.moremekasuitmodules.encased_purified_obsidian_ingot": "封装的精制黑曜石锭",
+  "item.moremekasuitmodules.encased_strappel_ingot": "封装的斯特拉佩尔锭",
+  "chemical.moremekasuitmodules.molten_strappel_mixture": "熔融斯特拉佩尔混合物",
+  "block.moremekasuitmodules.stranglet": "斯特朗格莱特",
+  "item.moremekasuitmodules.stranglet": "斯特朗格莱特"
 }

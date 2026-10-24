@@ -133,5 +133,11 @@
   "module.moremekasuitmodules.meka_tool_performance_amplification_unit": "MekaTool：性能増幅モジュール",
   "module.moremekasuitmodules.meka_tool_performance_multiplier_hud": "MekaTool性能倍率：×%1$s",
   "module.moremekasuitmodules.wall_cling_unit": "壁つかまりモジュール",
-  "tooltip.moremekasuitmodules.lava_storage": "溶岩：%s / %s mB"
+  "tooltip.moremekasuitmodules.lava_storage": "溶岩：%s / %s mB",
+  "chemical.moremekasuitmodules.strange_matter": "奇妙な物質",
+  "item.moremekasuitmodules.encased_purified_obsidian_ingot": "封入精製黒曜石インゴット",
+  "item.moremekasuitmodules.encased_strappel_ingot": "封入ストラペルインゴット",
+  "chemical.moremekasuitmodules.molten_strappel_mixture": "溶融ストラペル混合物",
+  "block.moremekasuitmodules.stranglet": "ストラングレット",
+  "item.moremekasuitmodules.stranglet": "ストラングレット"
 }

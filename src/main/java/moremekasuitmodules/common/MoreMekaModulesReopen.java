@@ -147,6 +147,7 @@ public class MoreMekaModulesReopen implements IModModule {
         NeoForge.EVENT_BUS.register(new CounterattackHandler());
         NeoForge.EVENT_BUS.register(new ImpactWaveHandler());
         NeoForge.EVENT_BUS.register(new HyperArmorHandler());
+        NeoForge.EVENT_BUS.register(new StrangletActivationHandler());
     }
 
     @Override

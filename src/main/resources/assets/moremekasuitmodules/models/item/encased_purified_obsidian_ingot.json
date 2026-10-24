@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "moremekasuitmodules:item/encased_purified_obsidian_ingot"
+  }
+}

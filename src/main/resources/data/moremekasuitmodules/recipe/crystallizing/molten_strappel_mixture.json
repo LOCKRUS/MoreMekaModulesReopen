@@ -1,0 +1,11 @@
+{
+  "type": "mekanism:crystallizing",
+  "input": {
+    "amount": 1000,
+    "chemical": "moremekasuitmodules:molten_strappel_mixture"
+  },
+  "output": {
+    "count": 1,
+    "id": "moremekasuitmodules:encased_strappel_ingot"
+  }
+}

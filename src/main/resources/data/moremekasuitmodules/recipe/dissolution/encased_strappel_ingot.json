@@ -1,0 +1,15 @@
+{
+  "type": "mekanism:dissolution",
+  "item_input": {
+    "item": "moremekasuitmodules:encased_purified_obsidian_ingot"
+  },
+  "chemical_input": {
+    "amount": 100,
+    "chemical": "moremekasuitmodules:strange_matter"
+  },
+  "output": {
+    "amount": 1000,
+    "id": "moremekasuitmodules:molten_strappel_mixture"
+  },
+  "per_tick_usage": false
+}
