@@ -1,5 +1,6 @@
 package moremekasuitmodules.common.block;
 
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -12,9 +13,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 /**
  * Living-looking spread block created by the Encased Strappel Ingot.
  *
- * Stranglet only replaces blocks that have a finite destroy speed. This keeps
- * bedrock, portals, barriers, and other unbreakable blocks intact while still
- * allowing it to consume ordinary terrain and structures.
+ * Stranglet consumes ordinary terrain and structures, but does not replace
+ * unbreakable blocks. Air is instead converted into invisible Unstable Air.
  */
 public class StrangletBlock extends Block {
     public StrangletBlock(BlockBehaviour.Properties properties) {
@@ -26,7 +26,9 @@ public class StrangletBlock extends Block {
         for (Direction direction : Direction.values()) {
             BlockPos target = pos.relative(direction);
             BlockState targetState = level.getBlockState(target);
-            if (canCapture(level, target, targetState)) {
+            if (targetState.isAir()) {
+                level.setBlock(target, MoreMekaSuitModulesBlocks.UNSTABLE_AIR.get().defaultBlockState(), Block.UPDATE_ALL);
+            } else if (canCapture(level, target, targetState)) {
                 level.setBlock(target, defaultBlockState(), Block.UPDATE_ALL);
             }
         }
@@ -35,6 +37,7 @@ public class StrangletBlock extends Block {
     public static boolean canCapture(Level level, BlockPos pos, BlockState state) {
         return !state.isAir()
                 && !(state.getBlock() instanceof StrangletBlock)
+                && !state.is(MoreMekaSuitModulesBlocks.UNSTABLE_AIR.get())
                 && state.getDestroySpeed(level, pos) >= 0.0F;
     }
 }

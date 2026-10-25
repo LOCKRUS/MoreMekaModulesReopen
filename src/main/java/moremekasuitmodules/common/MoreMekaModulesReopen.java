@@ -10,6 +10,7 @@ import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesCreativeTabs;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlockEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesChemicals;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
@@ -54,11 +55,13 @@ public class MoreMekaModulesReopen implements IModModule {
         modEventBus.addListener(MekaToolLavaHandler::register);
         modEventBus.addListener(MoreModulesConfig::onConfigLoad);
         modEventBus.addListener(this::imcQueue);
+        modEventBus.addListener(MoreMekaSuitModulesBlockEntities::registerCapabilities);
         MoreMekaSuitModulesDataComponents.DATA_COMPONENTS.register(modEventBus);
         MekaSuitMoreModulesItem.ITEMS.register(modEventBus);
         MoreMekaSuitModulesChemicals.CHEMICALS.register(modEventBus);
         MoreMekaSuitModulesSounds.SOUND_EVENTS.register(modEventBus);
         MoreMekaSuitModulesBlocks.BLOCKS.register(modEventBus);
+        MoreMekaSuitModulesBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         MoreMekaSuitModulesEffects.MOB_EFFECTS.register(modEventBus);
         MekaSuitMoreModules.MODULES.register(modEventBus);
         if (hooks.DraconicEvolutionLoaded.isLoaded()) {
@@ -151,6 +154,7 @@ public class MoreMekaModulesReopen implements IModModule {
         NeoForge.EVENT_BUS.register(new HyperArmorHandler());
         NeoForge.EVENT_BUS.register(new StrangletActivationHandler());
         NeoForge.EVENT_BUS.register(new StrangletExposureHandler());
+        NeoForge.EVENT_BUS.register(new RadiationChamberInteractionHandler());
     }
 
     @Override

@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "moremekasuitmodules:block/radiation_chamber",
+      "y": 0,
+      "uvlock": true
+    },
+    "facing=east": {
+      "model": "moremekasuitmodules:block/radiation_chamber",
+      "y": 90,
+      "uvlock": true
+    },
+    "facing=south": {
+      "model": "moremekasuitmodules:block/radiation_chamber",
+      "y": 180,
+      "uvlock": true
+    },
+    "facing=west": {
+      "model": "moremekasuitmodules:block/radiation_chamber",
+      "y": 270,
+      "uvlock": true
+    }
+  }
+}

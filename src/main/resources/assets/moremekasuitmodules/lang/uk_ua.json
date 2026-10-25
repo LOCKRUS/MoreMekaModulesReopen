@@ -142,5 +142,11 @@
   "item.moremekasuitmodules.stranglet": "Странглет",
   "effect.moremekasuitmodules.atomic_fission": "Атомне розщеплення",
   "death.moremekasuitmodules.atomic_fission.split": "%1$s був розщеплений на атоми",
-  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s дезінтегрувався"
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s дезінтегрувався",
+  "tooltip.moremekasuitmodules.hold_shift": "Утримуйте Shift для подробиць",
+  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] Ні в якому разі не натискайте правою кнопкою миші, якщо на вас немає повного костюма MekaSuit!",
+  "tooltip.moremekasuitmodules.stranglet": "Цей блок може перетворювати навколишні блоки на такі самі. Він небезпечний для всього живого.",
+  "block.moremekasuitmodules.unstable_air": "Нестабільне повітря",
+  "block.moremekasuitmodules.radiation_chamber": "Скляна камера опромінення",
+  "block.moremekasuitmodules.reaction_block": "Реакційний блок"
 }

@@ -142,5 +142,11 @@
   "item.moremekasuitmodules.stranglet": "Stranglet",
   "effect.moremekasuitmodules.atomic_fission": "Atomic Fission",
   "death.moremekasuitmodules.atomic_fission.split": "%1$s was split into atoms",
-  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s disintegrated"
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s disintegrated",
+  "tooltip.moremekasuitmodules.hold_shift": "Hold Shift for details",
+  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] Do not right-click unless you are wearing a full MekaSuit!",
+  "tooltip.moremekasuitmodules.stranglet": "This block can turn nearby blocks into more of itself. It is dangerous to all living things.",
+  "block.moremekasuitmodules.unstable_air": "Unstable Air",
+  "block.moremekasuitmodules.radiation_chamber": "Glass Radiation Chamber",
+  "block.moremekasuitmodules.reaction_block": "Reaction Block"
 }

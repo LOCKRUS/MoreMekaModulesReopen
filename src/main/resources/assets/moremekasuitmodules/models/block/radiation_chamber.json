@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "moremekasuitmodules:block/radiation_chamber_glass",
+    "north": "moremekasuitmodules:block/radiation_chamber_front",
+    "south": "moremekasuitmodules:block/radiation_chamber_glass",
+    "east": "moremekasuitmodules:block/radiation_chamber_glass",
+    "west": "moremekasuitmodules:block/radiation_chamber_glass",
+    "up": "moremekasuitmodules:block/radiation_chamber_glass",
+    "down": "moremekasuitmodules:block/radiation_chamber_glass"
+  }
+}

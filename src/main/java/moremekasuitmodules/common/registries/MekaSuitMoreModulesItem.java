@@ -94,4 +94,8 @@ public class MekaSuitMoreModulesItem {
             "charred_wood", properties -> new BlockItem(MoreMekaSuitModulesBlocks.CHARRED_WOOD.get(), properties));
     public static final ItemRegistryObject<Item> STRANGLET = ITEMS.registerItem(
             "stranglet", properties -> new BlockItem(MoreMekaSuitModulesBlocks.STRANGLET.get(), properties.rarity(Rarity.EPIC)));
+    public static final ItemRegistryObject<Item> RADIATION_CHAMBER = ITEMS.registerItem(
+            "radiation_chamber", properties -> new BlockItem(MoreMekaSuitModulesBlocks.RADIATION_CHAMBER.get(), properties.rarity(Rarity.EPIC)));
+    public static final ItemRegistryObject<Item> REACTION_BLOCK = ITEMS.registerItem(
+            "reaction_block", properties -> new BlockItem(MoreMekaSuitModulesBlocks.REACTION_BLOCK.get(), properties.rarity(Rarity.RARE)));
 }

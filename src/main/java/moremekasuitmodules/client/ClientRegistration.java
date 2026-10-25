@@ -4,9 +4,12 @@ import moremekasuitmodules.client.render.hud.MoreMekaSuitModulesHUD;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbModel;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbRenderer;
 import moremekasuitmodules.client.render.entity.AntimatterChargeRenderer;
+import moremekasuitmodules.client.render.block.RadiationChamberRenderer;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlockEntities;
+import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import mekanism.common.item.gear.ItemMekaTool;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +24,8 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextColor;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 
 
 @EventBusSubscriber(modid = MoreMekaModulesReopen.MODID, value = Dist.CLIENT)
@@ -54,6 +59,30 @@ public class ClientRegistration {
     }
 
     @SubscribeEvent
+    public static void addSpecialItemTooltips(ItemTooltipEvent event) {
+        var stack = event.getItemStack();
+        String descriptionKey;
+        boolean danger;
+        if (stack.is(MekaSuitMoreModulesItem.ENCASED_STRAPPEL_INGOT.get())) {
+            descriptionKey = "tooltip.moremekasuitmodules.encased_strappel_ingot";
+            danger = true;
+        } else if (stack.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
+            descriptionKey = "tooltip.moremekasuitmodules.stranglet";
+            danger = false;
+        } else {
+            return;
+        }
+
+        if (Screen.hasShiftDown()) {
+            var description = Component.translatable(descriptionKey);
+            event.getToolTip().add(danger ? description.withStyle(style -> style.withColor(TextColor.fromRgb(0xFF0000))) : description);
+        } else {
+            event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.hold_shift")
+                    .withStyle(ChatFormatting.GRAY));
+        }
+    }
+
+    @SubscribeEvent
     public static void registerOrbLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(AntimatterExplosiveOrbModel.LAYER_LOCATION,
                 AntimatterExplosiveOrbModel::createBodyLayer);
@@ -63,6 +92,8 @@ public class ClientRegistration {
     public static void registerOrbRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(MoreMekaSuitModulesEntities.ANTIMATTER_EXPLOSIVE_ORB.get(),
                 AntimatterExplosiveOrbRenderer::new);
+        event.registerBlockEntityRenderer(MoreMekaSuitModulesBlockEntities.RADIATION_CHAMBER.get(),
+                RadiationChamberRenderer::new);
     }
 
     @SubscribeEvent

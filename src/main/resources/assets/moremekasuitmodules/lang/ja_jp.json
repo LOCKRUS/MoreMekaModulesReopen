@@ -142,5 +142,11 @@
   "item.moremekasuitmodules.stranglet": "ストラングレット",
   "effect.moremekasuitmodules.atomic_fission": "原子分裂",
   "death.moremekasuitmodules.atomic_fission.split": "%1$sは原子に分解された",
-  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$sは崩壊した"
+  "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$sは崩壊した",
+  "tooltip.moremekasuitmodules.hold_shift": "Shiftキーを押し続けると詳細を表示",
+  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] MekaSuit一式を着用していない場合は、絶対に右クリックしないでください！",
+  "tooltip.moremekasuitmodules.stranglet": "このブロックは周囲のブロックを同じブロックに変化させます。すべての生物にとって危険です。",
+  "block.moremekasuitmodules.unstable_air": "不安定な空気",
+  "block.moremekasuitmodules.radiation_chamber": "ガラス放射線照射チャンバー",
+  "block.moremekasuitmodules.reaction_block": "反応ブロック"
 }
