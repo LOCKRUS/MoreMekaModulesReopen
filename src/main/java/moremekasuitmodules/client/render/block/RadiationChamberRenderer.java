@@ -1,8 +1,10 @@
 package moremekasuitmodules.client.render.block;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import mekanism.client.render.lib.effect.BoltRenderer;
 import mekanism.common.lib.effect.BoltEffect;
+import moremekasuitmodules.common.block.RadiationChamberBlock;
 import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
@@ -29,15 +31,16 @@ public final class RadiationChamberRenderer implements BlockEntityRenderer<Radia
         ItemStack contents = chamber.getContentsForRender();
         if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
             poseStack.pushPose();
-            poseStack.translate(0.25, 0.25, 0.25);
-            poseStack.scale(0.5F, 0.5F, 0.5F);
+            poseStack.translate(0.325, 0.325, 0.325);
+            poseStack.scale(0.35F, 0.35F, 0.35F);
             BlockState strangletState = MoreMekaSuitModulesBlocks.STRANGLET.get().defaultBlockState();
             Minecraft.getInstance().getBlockRenderer().renderSingleBlock(strangletState, poseStack, buffers, packedLight, packedOverlay);
             poseStack.popPose();
         } else if (!contents.isEmpty()) {
             poseStack.pushPose();
             poseStack.translate(0.5, 0.5, 0.5);
-            poseStack.scale(0.4F, 0.4F, 0.4F);
+            poseStack.mulPose(Axis.YP.rotationDegrees(facingYaw(chamber)));
+            poseStack.scale(0.5F, 0.5F, 0.5F);
             Minecraft.getInstance().getItemRenderer().renderStatic(contents, ItemDisplayContext.FIXED,
                     packedLight, packedOverlay, poseStack, buffers, chamber.getLevel(), 0);
             poseStack.popPose();
@@ -61,6 +64,16 @@ public final class RadiationChamberRenderer implements BlockEntityRenderer<Radia
             boltRenderer.update(new ArcKey(chamber.getBlockPos().asLong(), i), arc, partialTick);
         }
         boltRenderer.render(partialTick, poseStack, buffers);
+    }
+
+    private static float facingYaw(RadiationChamberBlockEntity chamber) {
+        return switch (chamber.getBlockState().getValue(RadiationChamberBlock.FACING)) {
+            case NORTH -> 0.0F;
+            case EAST -> 90.0F;
+            case SOUTH -> 180.0F;
+            case WEST -> 270.0F;
+            default -> 0.0F;
+        };
     }
 
     private record ArcKey(long position, int index) {

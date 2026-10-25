@@ -75,6 +75,8 @@ public final class RadiationChamberBlock extends BaseEntityBlock {
 
     @Override
     public <T extends BlockEntity> @Nullable BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        return level.isClientSide ? null : createTickerHelper(type, MoreMekaSuitModulesBlockEntities.RADIATION_CHAMBER.get(), RadiationChamberBlockEntity::serverTick);
+        return level.isClientSide
+                ? createTickerHelper(type, MoreMekaSuitModulesBlockEntities.RADIATION_CHAMBER.get(), RadiationChamberBlockEntity::clientTick)
+                : createTickerHelper(type, MoreMekaSuitModulesBlockEntities.RADIATION_CHAMBER.get(), RadiationChamberBlockEntity::serverTick);
     }
 }

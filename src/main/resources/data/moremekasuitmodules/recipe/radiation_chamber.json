@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " A ",
+    "HLH",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "H": {
+      "item": "moremekasuitmodules:hyperbolic_control_circuit"
+    },
+    "L": {
+      "item": "mekanismgenerators:laser_focus_matrix"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:radiation_chamber"
+  }
+}

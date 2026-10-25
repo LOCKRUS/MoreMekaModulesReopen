@@ -155,6 +155,7 @@ public class MoreMekaModulesReopen implements IModModule {
         NeoForge.EVENT_BUS.register(new StrangletActivationHandler());
         NeoForge.EVENT_BUS.register(new StrangletExposureHandler());
         NeoForge.EVENT_BUS.register(new RadiationChamberInteractionHandler());
+        NeoForge.EVENT_BUS.register(new RadiationChamberStructureHandler());
     }
 
     @Override

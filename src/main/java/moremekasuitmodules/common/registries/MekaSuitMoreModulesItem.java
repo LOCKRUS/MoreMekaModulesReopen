@@ -78,6 +78,8 @@ public class MekaSuitMoreModulesItem {
     public static final ItemRegistryObject<Item> STAR_THERMITE = ITEMS.register("star_thermite", Rarity.RARE);
     // Solipsismium-296 powder.
     public static final ItemRegistryObject<Item> SOLIPSISMIUM_296 = ITEMS.register("solipsismium_296", Rarity.EPIC);
+    // Refined steel ingot, produced by irradiating a Mekanism steel ingot.
+    public static final ItemRegistryObject<Item> REFINED_STEEL_INGOT = ITEMS.register("refined_steel_ingot", Rarity.UNCOMMON);
     // Otherworldly Alloy, created by infusing Atomic Alloy with Solipsismium.
     public static final ItemRegistryObject<Item> ALLOY_OTHERWORLDLY = ITEMS.register("alloy_otherworldly", Rarity.EPIC);
     // Hyperbolic chip, an enhanced ultimate control circuit.

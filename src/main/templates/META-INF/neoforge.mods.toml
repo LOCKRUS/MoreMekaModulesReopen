@@ -107,6 +107,13 @@ ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
+modId = "jade"
+type = "optional"
+versionRange = "[15.10,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${ mod_id }]]
 modId = "draconicevolution"
 type = "optional"
 versionRange = "[3.1.3.625,)"

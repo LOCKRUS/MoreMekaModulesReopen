@@ -18,6 +18,10 @@ public final class MoreMekaSuitModulesSounds {
             "antimatter_charge_start",
             () -> SoundEvent.createVariableRangeEvent(MoreMekaModulesReopen.rl("antimatter_charge_start")));
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> RADIATION_CHAMBER_LOOP = SOUND_EVENTS.register(
+            "radiation_chamber_loop",
+            () -> SoundEvent.createVariableRangeEvent(MoreMekaModulesReopen.rl("radiation_chamber_loop")));
+
     private MoreMekaSuitModulesSounds() {
     }
 }

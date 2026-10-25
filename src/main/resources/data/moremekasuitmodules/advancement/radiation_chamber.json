@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "structure_formed": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "icon": {
+      "id": "moremekasuitmodules:radiation_chamber",
+      "count": 1
+    },
+    "title": {
+      "translate": "advancements.moremekasuitmodules.radiation_chamber.title"
+    },
+    "description": {
+      "translate": "advancements.moremekasuitmodules.radiation_chamber.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "requirements": [
+    [
+      "structure_formed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

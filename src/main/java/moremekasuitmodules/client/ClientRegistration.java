@@ -5,7 +5,9 @@ import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbModel;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbRenderer;
 import moremekasuitmodules.client.render.entity.AntimatterChargeRenderer;
 import moremekasuitmodules.client.render.block.RadiationChamberRenderer;
+import moremekasuitmodules.client.sound.RadiationChamberSoundController;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
+import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlockEntities;
@@ -36,6 +38,7 @@ public class ClientRegistration {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
+        RadiationChamberBlockEntity.installClientTickHandler(RadiationChamberSoundController::tick);
         NeoForge.EVENT_BUS.register(new ClientTickHandler());
     }
 
@@ -61,6 +64,23 @@ public class ClientRegistration {
     @SubscribeEvent
     public static void addSpecialItemTooltips(ItemTooltipEvent event) {
         var stack = event.getItemStack();
+        if (stack.is(MekaSuitMoreModulesItem.RADIATION_CHAMBER.get())) {
+            if (Screen.hasShiftDown()) {
+                event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.radiation_chamber.structure")
+                        .withStyle(ChatFormatting.GRAY));
+                event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.radiation_chamber.ring")
+                        .withStyle(ChatFormatting.GRAY));
+                event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.radiation_chamber.rear")
+                        .withStyle(ChatFormatting.GRAY));
+                event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.radiation_chamber.front")
+                        .withStyle(ChatFormatting.GRAY));
+            } else {
+                event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.hold_shift")
+                        .withStyle(ChatFormatting.GRAY));
+            }
+            return;
+        }
+
         String descriptionKey;
         boolean danger;
         if (stack.is(MekaSuitMoreModulesItem.ENCASED_STRAPPEL_INGOT.get())) {

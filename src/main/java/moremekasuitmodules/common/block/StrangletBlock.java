@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -23,9 +24,15 @@ public class StrangletBlock extends Block {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+        if (random.nextInt(4) == 0) {
+            return;
+        }
         for (Direction direction : Direction.values()) {
             BlockPos target = pos.relative(direction);
             BlockState targetState = level.getBlockState(target);
+            if (targetState.is(MoreMekaSuitModulesBlocks.UNSTABLE_AIR.get())) {
+                continue;
+            }
             if (targetState.isAir()) {
                 level.setBlock(target, MoreMekaSuitModulesBlocks.UNSTABLE_AIR.get().defaultBlockState(), Block.UPDATE_ALL);
             } else if (canCapture(level, target, targetState)) {
@@ -38,6 +45,7 @@ public class StrangletBlock extends Block {
         return !state.isAir()
                 && !(state.getBlock() instanceof StrangletBlock)
                 && !state.is(MoreMekaSuitModulesBlocks.UNSTABLE_AIR.get())
+                && !state.is(Blocks.BEDROCK)
                 && state.getDestroySpeed(level, pos) >= 0.0F;
     }
 }

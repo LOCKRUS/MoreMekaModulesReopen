@@ -148,5 +148,15 @@
   "tooltip.moremekasuitmodules.stranglet": "This block can turn nearby blocks into more of itself. It is dangerous to all living things.",
   "block.moremekasuitmodules.unstable_air": "Unstable Air",
   "block.moremekasuitmodules.radiation_chamber": "Glass Radiation Chamber",
-  "block.moremekasuitmodules.reaction_block": "Reaction Block"
+  "block.moremekasuitmodules.reaction_block": "Reaction Plating",
+  "message.moremekasuitmodules.radiation_chamber_unformed": "Radiation chamber structure is incomplete.",
+  "jade.moremekasuitmodules.radiation_chamber_fuel": "D-T fuel: %1$s / %2$s mB",
+  "advancements.moremekasuitmodules.radiation_chamber.title": "What are your intentions?",
+  "advancements.moremekasuitmodules.radiation_chamber.description": "The highest stage of development",
+  "subtitles.moremekasuitmodules.radiation_chamber_loop": "Radiation chamber hum",
+  "item.moremekasuitmodules.refined_steel_ingot": "Refined Steel Ingot",
+  "tooltip.moremekasuitmodules.radiation_chamber.structure": "Structure: place the Glass Radiation Chamber in the center.",
+  "tooltip.moremekasuitmodules.radiation_chamber.ring": "Build an 8-block Reaction Plating ring around it; keep the front and back open.",
+  "tooltip.moremekasuitmodules.radiation_chamber.rear": "Rear: connect a chemical pipe with Fusion Fuel (D-T fuel).",
+  "tooltip.moremekasuitmodules.radiation_chamber.front": "Front: aim a Mekanism laser at the focus."
 }

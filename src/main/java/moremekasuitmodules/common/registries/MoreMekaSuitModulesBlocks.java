@@ -35,20 +35,23 @@ public final class MoreMekaSuitModulesBlocks {
 
     public static final DeferredHolder<Block, Block> UNSTABLE_AIR = BLOCKS.register(
             "unstable_air", () -> new UnstableAirBlock(Block.Properties.of()
+                    .air()
                     .noCollission()
                     .noOcclusion()
                     .replaceable()
-                    .randomTicks()
-                    .strength(0.0F)));
+                    .strength(-1.0F)));
 
     public static final DeferredHolder<Block, Block> RADIATION_CHAMBER = BLOCKS.register(
             "radiation_chamber", () -> new RadiationChamberBlock(Block.Properties.of()
-                    .strength(3.0F)
+                    .sound(SoundType.GLASS)
+                    .strength(3.5F, 4.8F)
+                    .requiresCorrectToolForDrops()
                     .noOcclusion()));
 
     public static final DeferredHolder<Block, Block> REACTION_BLOCK = BLOCKS.register(
             "reaction_block", () -> new Block(Block.Properties.of()
-                    .strength(3.0F)
+                    .strength(5.0F, 9.0F)
+                    .requiresCorrectToolForDrops()
                     .sound(SoundType.METAL)));
 
     private MoreMekaSuitModulesBlocks() {

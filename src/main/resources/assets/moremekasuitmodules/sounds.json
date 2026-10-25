@@ -16,5 +16,15 @@
         "pitch": 1.0
       }
     ]
+  },
+  "radiation_chamber_loop": {
+    "subtitle": "subtitles.moremekasuitmodules.radiation_chamber_loop",
+    "sounds": [
+      {
+        "name": "moremekasuitmodules:radiation_chamber_loop",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
   }
 }

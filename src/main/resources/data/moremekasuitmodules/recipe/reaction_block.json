@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "TTT",
+    "LSL",
+    "TTT"
+  ],
+  "key": {
+    "T": {
+      "item": "moremekasuitmodules:star_thermite"
+    },
+    "L": {
+      "item": "mekanism:dust_lithium"
+    },
+    "S": {
+      "item": "mekanism:sps_casing"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "moremekasuitmodules:reaction_block"
+  }
+}

@@ -1,7 +1,8 @@
 package moremekasuitmodules.common;
 
 import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
-import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -10,17 +11,27 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public final class RadiationChamberInteractionHandler {
     @SubscribeEvent
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-        if (event.getHand() != net.minecraft.world.InteractionHand.MAIN_HAND
+        if (event.getHand() != InteractionHand.MAIN_HAND
                 || !(event.getLevel().getBlockEntity(event.getPos()) instanceof RadiationChamberBlockEntity chamber)) {
             return;
         }
 
-        ItemStack held = event.getItemStack();
-        if (held.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
+        if (!chamber.isStructureFormed()) {
             event.setCancellationResult(InteractionResult.SUCCESS);
             event.setCanceled(true);
             if (!event.getLevel().isClientSide()) {
-                chamber.tryInsertStranglet(event.getEntity(), held);
+                event.getEntity().displayClientMessage(
+                        Component.translatable("message.moremekasuitmodules.radiation_chamber_unformed"), true);
+            }
+            return;
+        }
+
+        ItemStack held = event.getItemStack();
+        if (RadiationChamberBlockEntity.isSupportedInput(held)) {
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            event.setCanceled(true);
+            if (!event.getLevel().isClientSide()) {
+                chamber.tryInsertInput(event.getEntity(), held);
             }
             return;
         }

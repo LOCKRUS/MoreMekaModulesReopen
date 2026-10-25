@@ -1,6 +1,7 @@
 package moremekasuitmodules.common.registries;
 
 import mekanism.common.capabilities.Capabilities;
+import mekanism.api.lasers.ILaserReceptor;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.block.RadiationChamberBlock;
 import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
@@ -20,6 +21,20 @@ public final class MoreMekaSuitModulesBlockEntities {
                     .of(RadiationChamberBlockEntity::new, MoreMekaSuitModulesBlocks.RADIATION_CHAMBER.get())
                     .build(null));
 
+    private enum LaserShield implements ILaserReceptor {
+        INSTANCE;
+
+        @Override
+        public void receiveLaserEnergy(long energy) {
+            // Non-focus faces only absorb the beam so Mekanism never mines the chamber block.
+        }
+
+        @Override
+        public boolean canLasersDig() {
+            return false;
+        }
+    }
+
     private MoreMekaSuitModulesBlockEntities() {
     }
 
@@ -29,14 +44,11 @@ public final class MoreMekaSuitModulesBlockEntities {
                 return null;
             }
             Direction rear = blockEntity.getBlockState().getValue(RadiationChamberBlock.FACING).getOpposite();
-            return side == rear ? blockEntity.getFuelHandler() : null;
+            return side == rear && blockEntity.isStructureFormed() ? blockEntity.getFuelHandler() : null;
         });
         event.registerBlockEntity(Capabilities.LASER_RECEPTOR, RADIATION_CHAMBER.get(), (blockEntity, side) -> {
-            if (side == null) {
-                return null;
-            }
             Direction front = blockEntity.getBlockState().getValue(RadiationChamberBlock.FACING);
-            return side == front ? blockEntity : null;
+            return side == front ? blockEntity : LaserShield.INSTANCE;
         });
     }
 }

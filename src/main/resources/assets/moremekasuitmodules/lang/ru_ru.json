@@ -148,5 +148,15 @@
   "tooltip.moremekasuitmodules.stranglet": "Этот блок умеет превращать другие блоки вокруг себя в себе подобные. Опасен для всего живого.",
   "block.moremekasuitmodules.unstable_air": "Нестабильный воздух",
   "block.moremekasuitmodules.radiation_chamber": "Стеклянная камера излучения",
-  "block.moremekasuitmodules.reaction_block": "Реакционный блок"
+  "block.moremekasuitmodules.reaction_block": "Реакционная обшивка",
+  "message.moremekasuitmodules.radiation_chamber_unformed": "Структура камеры излучения не собрана.",
+  "jade.moremekasuitmodules.radiation_chamber_fuel": "Д-Т топливо: %1$s / %2$s мБ",
+  "advancements.moremekasuitmodules.radiation_chamber.title": "Какие у Вас намерения?",
+  "advancements.moremekasuitmodules.radiation_chamber.description": "Высший этап развития",
+  "subtitles.moremekasuitmodules.radiation_chamber_loop": "Гул камеры излучения",
+  "item.moremekasuitmodules.refined_steel_ingot": "Очищенный стальной слиток",
+  "tooltip.moremekasuitmodules.radiation_chamber.structure": "Структура: поместите стеклянную камеру излучения в центр.",
+  "tooltip.moremekasuitmodules.radiation_chamber.ring": "Соберите вокруг неё кольцо из 8 блоков «Реакционная обшивка», оставив переднюю и заднюю стороны открытыми.",
+  "tooltip.moremekasuitmodules.radiation_chamber.rear": "Сзади подключите химическую трубку с топливом Fusion Fuel (Д-Т топливо).",
+  "tooltip.moremekasuitmodules.radiation_chamber.front": "Спереди направьте лазер Mekanism в фокус."
 }
