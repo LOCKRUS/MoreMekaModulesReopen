@@ -154,7 +154,6 @@
   "advancements.moremekasuitmodules.radiation_chamber.title": "你的意图是什么？",
   "advancements.moremekasuitmodules.radiation_chamber.description": "发展的最高阶段",
   "subtitles.moremekasuitmodules.radiation_chamber_loop": "辐照室嗡鸣声",
-  "item.moremekasuitmodules.refined_steel_ingot": "精炼钢锭",
   "tooltip.moremekasuitmodules.radiation_chamber.structure": "结构：将玻璃辐射舱放在中央。",
   "tooltip.moremekasuitmodules.radiation_chamber.ring": "用8个反应装甲方块围成一圈，前后两面保持开放。",
   "tooltip.moremekasuitmodules.radiation_chamber.rear": "从后侧用化学管道输入聚变燃料（D-T燃料）。",

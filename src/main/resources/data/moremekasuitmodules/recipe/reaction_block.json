@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "TTT",
+    "TLT",
     "LSL",
-    "TTT"
+    "TLT"
   ],
   "key": {
     "T": {

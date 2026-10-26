@@ -3,12 +3,15 @@ package moremekasuitmodules.mixin.minecraft;
 import mekanism.api.gear.IModule;
 import mekanism.common.content.gear.IModuleContainerItem;
 import moremekasuitmodules.common.content.gear.ModuleInfiniteInterceptionAndRescueSystemUnit;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +27,28 @@ import java.util.function.Predicate;
 
 @Mixin(Level.class)
 public class MixinLevel {
+
+    @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", at = @At("HEAD"), cancellable = true)
+    private void moremekasuitmodules$protectStranglet(BlockPos pos, BlockState newState, int flags, CallbackInfoReturnable<Boolean> cir) {
+        Level level = (Level) (Object) this;
+        BlockState currentState = level.getBlockState(pos);
+        if (currentState.is(MoreMekaSuitModulesBlocks.STRANGLET.get())
+                && !newState.isAir()
+                && !newState.is(MoreMekaSuitModulesBlocks.STRANGLET.get())) {
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z", at = @At("HEAD"), cancellable = true)
+    private void moremekasuitmodules$protectStrangletWithRecursion(BlockPos pos, BlockState newState, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
+        Level level = (Level) (Object) this;
+        BlockState currentState = level.getBlockState(pos);
+        if (currentState.is(MoreMekaSuitModulesBlocks.STRANGLET.get())
+                && !newState.isAir()
+                && !newState.is(MoreMekaSuitModulesBlocks.STRANGLET.get())) {
+            cir.setReturnValue(false);
+        }
+    }
 
     @Inject(method = "getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;", at = @At("RETURN"), locals = LocalCapture.CAPTURE_FAILHARD)
     public void SkipisInfiniteModuleEntity(Entity p_46536_, AABB p_46537_, Predicate<? super Entity> p_46538_, CallbackInfoReturnable<List<Entity>> cir, List<Entity> list) {

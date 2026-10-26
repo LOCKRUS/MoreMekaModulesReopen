@@ -11,7 +11,8 @@ import net.neoforged.neoforge.event.level.BlockEvent;
 public final class RadiationChamberStructureHandler {
     @SubscribeEvent
     public void onBlockPlaced(BlockEvent.EntityPlaceEvent event) {
-        if (!event.getPlacedBlock().is(MoreMekaSuitModulesBlocks.REACTION_BLOCK.get())
+        if ((!event.getPlacedBlock().is(MoreMekaSuitModulesBlocks.REACTION_BLOCK.get())
+                    && !event.getPlacedBlock().is(MoreMekaSuitModulesBlocks.RADIATION_CHAMBER.get()))
                 || !(event.getLevel() instanceof ServerLevel level)
                 || !(event.getEntity() instanceof ServerPlayer player)) {
             return;

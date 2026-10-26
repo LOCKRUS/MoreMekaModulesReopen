@@ -64,6 +64,19 @@ public class ClientRegistration {
     @SubscribeEvent
     public static void addSpecialItemTooltips(ItemTooltipEvent event) {
         var stack = event.getItemStack();
+        int nameColor = -1;
+        if (stack.is(MekaSuitMoreModulesItem.REACTION_BLOCK.get())) {
+            nameColor = 0xAA00AA;
+        } else if (stack.is(MekaSuitMoreModulesItem.RADIATION_CHAMBER.get())) {
+            // Match the epic rarity color used by the Hyperbolic Control Circuit.
+            nameColor = 0xFF55FF;
+        }
+        final int selectedNameColor = nameColor;
+        if (selectedNameColor >= 0 && !event.getToolTip().isEmpty()) {
+            event.getToolTip().set(0, event.getToolTip().get(0).copy()
+                    .withStyle(style -> style.withColor(TextColor.fromRgb(selectedNameColor))));
+        }
+
         if (stack.is(MekaSuitMoreModulesItem.RADIATION_CHAMBER.get())) {
             if (Screen.hasShiftDown()) {
                 event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.radiation_chamber.structure")

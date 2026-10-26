@@ -1,5 +1,6 @@
 package moremekasuitmodules.common.block;
 
+import moremekasuitmodules.common.StrangletBiomeManager;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,6 +21,14 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 public class StrangletBlock extends Block {
     public StrangletBlock(BlockBehaviour.Properties properties) {
         super(properties.randomTicks());
+    }
+
+    @Override
+    public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
+        super.onPlace(state, level, pos, oldState, movedByPiston);
+        if (!level.isClientSide && !oldState.is(this)) {
+            StrangletBiomeManager.markInfected(level, pos);
+        }
     }
 
     @Override

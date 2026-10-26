@@ -154,7 +154,6 @@
   "advancements.moremekasuitmodules.radiation_chamber.title": "Які у Вас наміри?",
   "advancements.moremekasuitmodules.radiation_chamber.description": "Найвищий етап розвитку",
   "subtitles.moremekasuitmodules.radiation_chamber_loop": "Гул камери опромінення",
-  "item.moremekasuitmodules.refined_steel_ingot": "Очищений сталевий злиток",
   "tooltip.moremekasuitmodules.radiation_chamber.structure": "Структура: поставте скляну камеру випромінювання в центр.",
   "tooltip.moremekasuitmodules.radiation_chamber.ring": "Оточіть її кільцем із 8 блоків «Реакційна обшивка», залишивши передню та задню сторони відкритими.",
   "tooltip.moremekasuitmodules.radiation_chamber.rear": "Ззаду під’єднайте хімічну трубку з Fusion Fuel (D-T паливо).",

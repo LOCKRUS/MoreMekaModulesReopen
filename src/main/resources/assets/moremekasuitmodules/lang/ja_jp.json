@@ -154,7 +154,6 @@
   "advancements.moremekasuitmodules.radiation_chamber.title": "あなたの意図は？",
   "advancements.moremekasuitmodules.radiation_chamber.description": "開発の最高段階",
   "subtitles.moremekasuitmodules.radiation_chamber_loop": "放射線照射チャンバーの稼働音",
-  "item.moremekasuitmodules.refined_steel_ingot": "精製鋼インゴット",
   "tooltip.moremekasuitmodules.radiation_chamber.structure": "構造: 放射線ガラスチャンバーを中央に設置します。",
   "tooltip.moremekasuitmodules.radiation_chamber.ring": "前面と背面を開けたまま、反応装甲ブロック8個で囲みます。",
   "tooltip.moremekasuitmodules.radiation_chamber.rear": "背面からFusion Fuel（D-T燃料）を化学パイプで供給します。",

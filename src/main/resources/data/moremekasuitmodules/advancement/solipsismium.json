@@ -1,10 +1,14 @@
 {
   "parent": "mekanism:nucleosynthesizer",
   "criteria": {
-    "craft_solipsismium": {
-      "trigger": "minecraft:recipe_crafted",
+    "obtain_solipsism": {
+      "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "recipe_id": "moremekasuitmodules:solipsismium_296"
+        "items": [
+          {
+            "items": "moremekasuitmodules:solipsismium_296"
+          }
+        ]
       }
     }
   },
@@ -26,7 +30,7 @@
   },
   "requirements": [
     [
-      "craft_solipsismium"
+      "obtain_solipsism"
     ]
   ],
   "sends_telemetry_event": true

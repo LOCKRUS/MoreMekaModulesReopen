@@ -5,7 +5,6 @@ import mekanism.api.AutomationType;
 import mekanism.api.chemical.BasicChemicalTank;
 import mekanism.api.chemical.ChemicalStack;
 import mekanism.api.lasers.ILaserReceptor;
-import mekanism.common.registries.MekanismItems;
 import mekanism.generators.common.registries.GeneratorsChemicals;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.block.RadiationChamberBlock;
@@ -36,7 +35,6 @@ import java.util.function.Consumer;
 public final class RadiationChamberBlockEntity extends BlockEntity implements ILaserReceptor {
     public static final long FUEL_CAPACITY = 1_000;
     public static final int REACTION_DURATION_TICKS = 20 * 60;
-    public static final int REFINED_STEEL_DURATION_TICKS = 20 * 30;
     private static final String CHEMICAL_KEY = "FuelTank";
     private static final String ITEM_KEY = "ChamberContents";
     private static final String PROGRESS_KEY = "ReactionTicks";
@@ -106,8 +104,6 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
         if (reactionTicks >= requiredTicks) {
             if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
                 contents = new ItemStack(MekaSuitMoreModulesItem.SOLIPSISMIUM_296.get());
-            } else if (contents.is(MekanismItems.STEEL_INGOT.get())) {
-                contents = new ItemStack(MekaSuitMoreModulesItem.REFINED_STEEL_INGOT.get());
             }
             reactionTicks = 0;
             setReactionActive(false);
@@ -200,15 +196,12 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
     }
 
     public static boolean isSupportedInput(ItemStack stack) {
-        return stack.is(MekaSuitMoreModulesItem.STRANGLET.get()) || stack.is(MekanismItems.STEEL_INGOT.get());
+        return stack.is(MekaSuitMoreModulesItem.STRANGLET.get());
     }
 
     private int getReactionDurationTicks() {
         if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
             return REACTION_DURATION_TICKS;
-        }
-        if (contents.is(MekanismItems.STEEL_INGOT.get())) {
-            return REFINED_STEEL_DURATION_TICKS;
         }
         return 0;
     }
