@@ -6,15 +6,12 @@ import mekanism.client.render.lib.effect.BoltRenderer;
 import mekanism.common.lib.effect.BoltEffect;
 import moremekasuitmodules.common.block.RadiationChamberBlock;
 import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
-import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
-import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.RandomSource;
 
@@ -29,17 +26,11 @@ public final class RadiationChamberRenderer implements BlockEntityRenderer<Radia
     public void render(RadiationChamberBlockEntity chamber, float partialTick, PoseStack poseStack,
                        MultiBufferSource buffers, int packedLight, int packedOverlay) {
         ItemStack contents = chamber.getContentsForRender();
-        if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
-            poseStack.pushPose();
-            poseStack.translate(0.325, 0.325, 0.325);
-            poseStack.scale(0.35F, 0.35F, 0.35F);
-            BlockState strangletState = MoreMekaSuitModulesBlocks.STRANGLET.get().defaultBlockState();
-            Minecraft.getInstance().getBlockRenderer().renderSingleBlock(strangletState, poseStack, buffers, packedLight, packedOverlay);
-            poseStack.popPose();
-        } else if (!contents.isEmpty()) {
+        if (!contents.isEmpty()) {
             poseStack.pushPose();
             poseStack.translate(0.5, 0.5, 0.5);
             poseStack.mulPose(Axis.YP.rotationDegrees(facingYaw(chamber)));
+            // Use one fixed display transform and scale for every recipe input and output.
             poseStack.scale(0.5F, 0.5F, 0.5F);
             Minecraft.getInstance().getItemRenderer().renderStatic(contents, ItemDisplayContext.FIXED,
                     packedLight, packedOverlay, poseStack, buffers, chamber.getLevel(), 0);

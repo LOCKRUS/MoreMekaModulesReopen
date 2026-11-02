@@ -5,6 +5,7 @@
   "mixins": [
     "mekanism.ComponentBackedContainerAccessor",
     "mekanism.MixinComponentBackedEnergyContainer",
+    "mekanism.MixinItemEnergized",
     "mekanism.MixinItemMekaSuitArmor",
     "mekanism.MixinItemMekaTool",
     "mekanism.MixinTileEntityModificationStation",

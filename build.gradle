@@ -119,6 +119,8 @@ configurations {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -160,6 +162,10 @@ dependencies {
     implementation "curse.maven:ftb-library-forge-404465:6874538"
     implementation "curse.maven:configured-457570:5873783"
     implementation "curse.maven:crafttweaker-239197:6434161"
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

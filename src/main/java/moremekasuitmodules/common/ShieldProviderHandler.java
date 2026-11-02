@@ -6,6 +6,7 @@ import moremekasuitmodules.common.item.interfaces.IShieldProvider;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesDataComponents;
 import moremekasuitmodules.common.util.MoreMekaSuitModulesUtils;
+import moremekasuitmodules.common.util.ProportionalEnergyAllocator;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -23,6 +24,8 @@ import java.util.List;
 
 //护盾处理事件
 public class ShieldProviderHandler {
+
+    private static final long LAST_STAND_ENERGY_COST = 10_000_000L;
 
     /**
      * Delay between shield activations. This is intentionally separate from
@@ -117,21 +120,23 @@ public class ShieldProviderHandler {
         }
 
         long[] charge = new long[summery.armorStacks.size()];
-        long totalCharge = 0;
         for (int i = 0; i < summery.armorStacks.size(); i++) {
             if (!summery.armorStacks.get(i).isEmpty() && summery.armorStacks.get(i).getItem() instanceof IShieldProvider provider) {
                 charge[i] = provider.getEnergyStored(summery.armorStacks.get(i));
-                totalCharge += charge[i];
             }
         }
+        long totalCharge = ProportionalEnergyAllocator.saturatedTotal(charge);
 
-        if (totalCharge < MoreModulesConfig.config.lastStandEnergyRequirement.get() || !getShieldState(player)) {
+        if (totalCharge <= 0 || totalCharge < MoreModulesConfig.config.lastStandEnergyRequirement.get() || !getShieldState(player)) {
             return;
         }
 
+        long[] energyToConsume = ProportionalEnergyAllocator.allocate(charge, LAST_STAND_ENERGY_COST);
         for (int i = 0; i < summery.armorStacks.size(); i++) {
             if (!summery.armorStacks.get(i).isEmpty() && summery.armorStacks.get(i).getItem() instanceof IShieldProvider provider) {
-                provider.modifyEnergy(summery.armorStacks.get(i), ((charge[i] / totalCharge) * 10000000), player);
+                if (energyToConsume[i] > 0) {
+                    provider.modifyEnergy(summery.armorStacks.get(i), energyToConsume[i], player);
+                }
             }
         }
 

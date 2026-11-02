@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,7 +35,9 @@ import java.util.function.Consumer;
 
 public final class RadiationChamberBlockEntity extends BlockEntity implements ILaserReceptor {
     public static final long FUEL_CAPACITY = 1_000;
-    public static final int REACTION_DURATION_TICKS = 20 * 60;
+    public static final int STRANGLET_REACTION_DURATION_TICKS = 20 * 60;
+    public static final int DEEPSLATE_REACTION_DURATION_TICKS = 20 * 30;
+    public static final int GREEN_DYE_REACTION_DURATION_TICKS = 20 * 15;
     private static final String CHEMICAL_KEY = "FuelTank";
     private static final String ITEM_KEY = "ChamberContents";
     private static final String PROGRESS_KEY = "ReactionTicks";
@@ -85,7 +88,7 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
                 && lastLaserTick >= level.getGameTime() - 1
                 && !fuelTank.isEmpty();
         if (!shouldRun) {
-            if (reactionTicks != 0) {
+            if (requiredTicks <= 0 && reactionTicks != 0) {
                 reactionTicks = 0;
                 setChanged();
             }
@@ -104,6 +107,10 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
         if (reactionTicks >= requiredTicks) {
             if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
                 contents = new ItemStack(MekaSuitMoreModulesItem.SOLIPSISMIUM_296.get());
+            } else if (contents.is(Items.DEEPSLATE)) {
+                contents = new ItemStack(Items.REINFORCED_DEEPSLATE);
+            } else if (contents.is(Items.GREEN_DYE)) {
+                contents = new ItemStack(Items.SLIME_BALL);
             }
             reactionTicks = 0;
             setReactionActive(false);
@@ -196,14 +203,31 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
     }
 
     public static boolean isSupportedInput(ItemStack stack) {
-        return stack.is(MekaSuitMoreModulesItem.STRANGLET.get());
+        return stack.is(MekaSuitMoreModulesItem.STRANGLET.get())
+                || stack.is(Items.DEEPSLATE)
+                || stack.is(Items.GREEN_DYE);
     }
 
     private int getReactionDurationTicks() {
         if (contents.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
-            return REACTION_DURATION_TICKS;
+            return STRANGLET_REACTION_DURATION_TICKS;
+        }
+        if (contents.is(Items.DEEPSLATE)) {
+            return DEEPSLATE_REACTION_DURATION_TICKS;
+        }
+        if (contents.is(Items.GREEN_DYE)) {
+            return GREEN_DYE_REACTION_DURATION_TICKS;
         }
         return 0;
+    }
+
+    /** Returns the current recipe progress as a percentage, or -1 when the contents are not a reaction input. */
+    public int getReactionProgressPercent() {
+        int duration = getReactionDurationTicks();
+        if (duration <= 0) {
+            return -1;
+        }
+        return Math.min(100, reactionTicks * 100 / duration);
     }
 
     public ItemStack getContentsForRender() {
