@@ -2,42 +2,30 @@
 
 ## 1.6.5
 
-### Added and changed
-
-- Increased D-T fuel consumption tenfold for every radiation-chamber recipe: 10 mB per active tick for the standard recipes and 100 mB per active tick for the Strappel-ingot recipe.
-- Added a radiation-chamber recipe for the encased Strappel ingot: 90 seconds (180,000 mB total), with a 50% chance to produce a Stranglet and a 50% chance to produce an encased purified obsidian ingot.
-- Added a black dye-to-coal reaction, matching green dye-to-slime ball at 15 seconds and 10 mB of D-T fuel per active tick (3,000 mB total).
-- The Strappel-ingot reaction requires clear daylight for the full duration. Night or rain resets its progress; the input remains in the chamber, while fuel already consumed is not refunded.
-- Removed the legacy right-click block activation for the encased Strappel ingot. Removed its now-unnecessary tooltip; the hazard warning belongs to the Stranglet block tooltip.
-- JEI now cycles through both possible outcomes and describes their chances and the clear-daylight requirement. Added translations for the new hints in all five supported languages.
-- Increased the D-T visual in JEI to a full 1,000 mB indicator so the fuel is easier to distinguish; the tooltip continues to show the exact per-tick and total recipe consumption.
-
-### Validation
-
-- Final `./gradlew clean test build` completed successfully with JDK 21; all 7 unit tests passed.
-- Compilation reports two existing deprecation warnings for Mekanism's `ChemicalBuilder.gaseous()` calls in `MoreMekaSuitModulesChemicals.java`.
-
-## 1.6.5-beta1 (Pre-release)
-
 ### Added
 
-- Added an optional JEI recipe category for the radiation chamber, using the supplied 256×256 texture and its 176×90 visible interface region.
-- Hovering the D-T fuel input shows use per active tick, total recipe fuel (1,200 mB for Stranglet, 600 mB for deepslate, 300 mB for green dye), and active reaction time. The Stranglet recipe needs refueling because its total exceeds the 1,000 mB tank capacity.
+- Added an optional JEI recipe category for the Radiation Chamber. It uses the supplied 256×256 texture with a 176×90 visible area. The D-T fuel input shows a full 1,000 mB visual indicator; hovering it gives the exact per-tick use, total fuel and reaction time.
+- Added these Radiation Chamber recipes (all values below are final):
+  - Stranglet → Solipsismium-296: 1,200 ticks (60 seconds), 10 mB/t, 12,000 mB total; replenish fuel during the reaction because this exceeds the chamber's 1,000 mB tank capacity.
+  - Deepslate → Reinforced Deepslate: 600 ticks (30 seconds), 10 mB/t, 6,000 mB total.
+  - Green Dye → Slime Ball: 300 ticks (15 seconds), 10 mB/t, 3,000 mB total.
+  - Black Dye → Coal: 300 ticks (15 seconds), 10 mB/t, 3,000 mB total.
+  - Encased Strappel Ingot → Stranglet or Encased Purified Obsidian Ingot: 1,800 ticks (90 seconds), 100 mB/t, 180,000 mB total, with a 50% chance for each outcome.
+- The Strappel-ingot reaction requires clear daylight throughout. Night or rain resets its progress; the input remains in the chamber, but fuel already consumed is not refunded. JEI shows both outcomes, their chances and the environmental requirements.
 
-### Fixed
+### Fixed and updated
 
 - Corrected shield-recharge energy debits so small provider shares are not lost to integer division.
 - Fixed the MekaTool flamethrower handler so a missing or disabled module does not intercept ordinary right-click behavior.
-- Re-encoded the radiation-chamber JEI background as a real PNG and made only the edge-connected pure-white background transparent, preserving non-white colors and isolated white details.
+- Removed the old right-click block activation for the Encased Strappel Ingot and its now-unneeded item tooltip. The danger warning is shown on the Stranglet block instead.
+- Corrected the Radiation Chamber JEI background to a real PNG and made only the edge-connected white background transparent, preserving isolated white details.
+- Adjusted the D-T fuel and item-input positions in the JEI category by one pixel for alignment.
+- Revised 14 module descriptions and added the new Radiation Chamber hints in all five included languages (English, Russian, Japanese, Ukrainian and Chinese).
 
-### Updated
+### Compatibility and validation
 
-- Revised 14 module descriptions in all five included languages to better match implemented behavior, settings, costs and timings.
-
-### Validation and compatibility
-
-- Clean JDK 21 Gradle test/build completed; all 7 unit tests passed.
-- JEI is an optional client integration (minimum API version 19.8.5); Mekanism and Mekanism Generators remain required.
+- Mekanism and Mekanism Generators are required. JEI is optional (minimum API version 19.8.5).
+- Clean JDK 21 `./gradlew clean test build` completed successfully; all 7 unit tests passed. The build reports two existing deprecation warnings for Mekanism's `ChemicalBuilder.gaseous()` calls in `MoreMekaSuitModulesChemicals.java`.
 
 ## 1.6.4
 
