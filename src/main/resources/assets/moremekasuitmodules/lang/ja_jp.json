@@ -144,8 +144,7 @@
   "death.moremekasuitmodules.atomic_fission.split": "%1$sは原子に分解された",
   "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$sは崩壊した",
   "tooltip.moremekasuitmodules.hold_shift": "Shiftキーを押し続けると詳細を表示",
-  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] MekaSuit一式を着用していない場合は、絶対に右クリックしないでください！",
-  "tooltip.moremekasuitmodules.stranglet": "このブロックは周囲のブロックを同じブロックに変化させます。すべての生物にとって危険です。",
+  "tooltip.moremekasuitmodules.stranglet": "危険: このブロックは周囲のブロックをストラングレットに変化させ、生物に危害を及ぼします。",
   "block.moremekasuitmodules.unstable_air": "不安定な空気",
   "block.moremekasuitmodules.radiation_chamber": "ガラス放射線照射チャンバー",
   "block.moremekasuitmodules.reaction_block": "反応装甲",
@@ -162,5 +161,11 @@
   "biome.moremekasuitmodules.strange_biome": "奇妙なバイオーム",
   "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick": "燃料消費 %s mB/t",
   "jei.moremekasuitmodules.radiation_chamber.total_fuel": "燃料合計 %s mB",
-  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "反応時間 %s 秒"
+  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "反応時間 %s 秒",
+  "jei.moremekasuitmodules.radiation_chamber.outcome_title": "生成結果の確率",
+  "jei.moremekasuitmodules.radiation_chamber.success_chance": "ストラングレット: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.failure_chance": "封入済み精製黒曜石インゴット: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title": "必要条件",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement": "晴れた昼間に90秒間、連続して反応させる必要があります。",
+  "jei.moremekasuitmodules.radiation_chamber.interruption_resets": "夜または雨で進行状況がリセットされます。消費済み燃料は返却されません。"
 }

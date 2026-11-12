@@ -84,6 +84,17 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
         updateStructureState(null);
         RadiationChamberRecipe recipe = RadiationChamberRecipes.find(contents).orElse(null);
         int requiredTicks = recipe == null ? 0 : recipe.durationTicks();
+        if (recipe != null && recipe.requiresClearDaylight()
+                && (!level.isDay() || level.isRaining() || level.isThundering())) {
+            if (reactionTicks != 0) {
+                reactionTicks = 0;
+                setChanged();
+                syncClient();
+            }
+            setReactionActive(false);
+            return;
+        }
+
         boolean shouldRun = structureFormed
                 && requiredTicks > 0
                 && lastLaserTick >= level.getGameTime() - 1
@@ -97,8 +108,13 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
             return;
         }
 
+        ChemicalStack simulated = fuelTank.extract(recipe.fuelPerTick(), Action.SIMULATE, AutomationType.INTERNAL);
+        if (simulated.getAmount() < recipe.fuelPerTick()) {
+            setReactionActive(false);
+            return;
+        }
         ChemicalStack consumed = fuelTank.extract(recipe.fuelPerTick(), Action.EXECUTE, AutomationType.INTERNAL);
-        if (consumed.isEmpty()) {
+        if (consumed.getAmount() < recipe.fuelPerTick()) {
             setReactionActive(false);
             return;
         }
@@ -106,7 +122,7 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
         setChanged();
         setReactionActive(true);
         if (reactionTicks >= requiredTicks) {
-            contents = recipe.createOutputStack();
+            contents = recipe.createOutputStack(level.random);
             reactionTicks = 0;
             setReactionActive(false);
             setChanged();

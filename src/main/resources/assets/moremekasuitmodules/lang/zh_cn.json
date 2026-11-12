@@ -144,8 +144,7 @@
   "death.moremekasuitmodules.atomic_fission.split": "%1$s被裂解成原子",
   "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s发生了分解",
   "tooltip.moremekasuitmodules.hold_shift": "按住 Shift 查看详情",
-  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] 如果没有穿戴完整的 MekaSuit，绝对不要右键点击！",
-  "tooltip.moremekasuitmodules.stranglet": "该方块会将周围的其他方块转变为同类方块，对所有生物都很危险。",
+  "tooltip.moremekasuitmodules.stranglet": "危险：此方块会将周围的方块转化为斯特朗格利特，并会危害所有生物。",
   "block.moremekasuitmodules.unstable_air": "不稳定空气",
   "block.moremekasuitmodules.radiation_chamber": "玻璃辐照室",
   "block.moremekasuitmodules.reaction_block": "反应装甲",
@@ -162,5 +161,11 @@
   "biome.moremekasuitmodules.strange_biome": "奇异生物群系",
   "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick": "燃料消耗 %s mB/t",
   "jei.moremekasuitmodules.radiation_chamber.total_fuel": "燃料总量 %s mB",
-  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "反应时间 %s 秒"
+  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "反应时间 %s 秒",
+  "jei.moremekasuitmodules.radiation_chamber.outcome_title": "结果概率",
+  "jei.moremekasuitmodules.radiation_chamber.success_chance": "斯特朗格利特：%s%%",
+  "jei.moremekasuitmodules.radiation_chamber.failure_chance": "封装纯化黑曜石锭：%s%%",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title": "反应条件",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement": "需要在晴朗白昼下连续反应90秒。",
+  "jei.moremekasuitmodules.radiation_chamber.interruption_resets": "夜晚或降雨会使进度归零；已消耗的燃料不会返还。"
 }

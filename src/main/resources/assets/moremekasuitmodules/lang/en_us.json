@@ -145,8 +145,7 @@
   "death.moremekasuitmodules.atomic_fission.split": "%1$s was split into atoms",
   "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s disintegrated",
   "tooltip.moremekasuitmodules.hold_shift": "Hold Shift for details",
-  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] Do not right-click unless you are wearing a full MekaSuit!",
-  "tooltip.moremekasuitmodules.stranglet": "This block can turn nearby blocks into more of itself. It is dangerous to all living things.",
+  "tooltip.moremekasuitmodules.stranglet": "Danger: this block can convert nearby blocks into more Stranglet and is hazardous to living beings.",
   "block.moremekasuitmodules.unstable_air": "Unstable Air",
   "block.moremekasuitmodules.radiation_chamber": "Glass Radiation Chamber",
   "block.moremekasuitmodules.reaction_block": "Reaction Plating",
@@ -162,5 +161,11 @@
   "tooltip.moremekasuitmodules.radiation_chamber.front": "Front: aim a Mekanism laser at the focus.",
   "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick": "Fuel use %s mB/t",
   "jei.moremekasuitmodules.radiation_chamber.total_fuel": "Total fuel %s mB",
-  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Reaction time %s s"
+  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Reaction time %s s",
+  "jei.moremekasuitmodules.radiation_chamber.outcome_title": "Outcome chance",
+  "jei.moremekasuitmodules.radiation_chamber.success_chance": "Stranglet: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.failure_chance": "Encased Purified Obsidian Ingot: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title": "Required conditions",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement": "Requires clear daylight for 90 uninterrupted seconds.",
+  "jei.moremekasuitmodules.radiation_chamber.interruption_resets": "Night or rain resets progress; fuel already consumed is not refunded."
 }

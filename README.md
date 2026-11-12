@@ -8,7 +8,7 @@ This repository was based on https://github.com/sddsd2332/MekanismMoreMekaSuitMo
 
 ## Current release status
 
-**Pre-release: 1.6.5-beta1** targets Minecraft 1.21.1 and NeoForge 21.1.200. It is intended for testing; see [the prerelease page](https://github.com/LOCKRUS/MoreMekaModulesReopen/releases/tag/1.6.5-beta1) and [changelog](CHANGELOG.md).
+**Release: 1.6.5** targets Minecraft 1.21.1 and NeoForge 21.1.200. See the [release page](https://github.com/LOCKRUS/MoreMekaModulesReopen/releases/tag/1.6.5) and [changelog](CHANGELOG.md).
 
 The latest stable release remains **1.6.4**.
 

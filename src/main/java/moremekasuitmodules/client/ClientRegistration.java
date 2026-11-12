@@ -94,21 +94,14 @@ public class ClientRegistration {
             return;
         }
 
-        String descriptionKey;
-        boolean danger;
-        if (stack.is(MekaSuitMoreModulesItem.ENCASED_STRAPPEL_INGOT.get())) {
-            descriptionKey = "tooltip.moremekasuitmodules.encased_strappel_ingot";
-            danger = true;
-        } else if (stack.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
-            descriptionKey = "tooltip.moremekasuitmodules.stranglet";
-            danger = false;
-        } else {
+        if (!stack.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
             return;
         }
 
+        String descriptionKey = "tooltip.moremekasuitmodules.stranglet";
         if (Screen.hasShiftDown()) {
             var description = Component.translatable(descriptionKey);
-            event.getToolTip().add(danger ? description.withStyle(style -> style.withColor(TextColor.fromRgb(0xFF0000))) : description);
+            event.getToolTip().add(description.withStyle(style -> style.withColor(TextColor.fromRgb(0xFF0000))));
         } else {
             event.getToolTip().add(Component.translatable("tooltip.moremekasuitmodules.hold_shift")
                     .withStyle(ChatFormatting.GRAY));

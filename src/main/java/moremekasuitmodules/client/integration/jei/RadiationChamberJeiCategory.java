@@ -20,12 +20,13 @@ import moremekasuitmodules.common.recipe.RadiationChamberRecipe;
 import moremekasuitmodules.common.recipe.RadiationChamberRecipes;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public final class RadiationChamberJeiCategory implements IRecipeCategory<RadiationChamberRecipe> {
     private static final int WIDTH = 176;
-    private static final int HEIGHT = 96;
+    private static final int HEIGHT = 90;
     private static final int TEXTURE_SIZE = 256;
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             MoreMekaModulesReopen.MODID, "textures/gui/jei/radiation_chamber.png");
@@ -43,7 +44,8 @@ public final class RadiationChamberJeiCategory implements IRecipeCategory<Radiat
 
     private static final int FUEL_X = 27;
     private static final int FUEL_Y = 35;
-    private static final int INPUT_X = 53;
+    private static final long FUEL_ICON_AMOUNT = 1_000;
+    private static final int INPUT_X = 55;
     private static final int INPUT_Y = 35;
     private static final int OUTPUT_X = 126;
     private static final int OUTPUT_Y = 35;
@@ -88,7 +90,7 @@ public final class RadiationChamberJeiCategory implements IRecipeCategory<Radiat
     public void setRecipe(IRecipeLayoutBuilder builder, RadiationChamberRecipe recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, FUEL_X, FUEL_Y)
                 .addIngredients(MekanismJEI.TYPE_CHEMICAL,
-                        List.of(GeneratorsChemicals.FUSION_FUEL.asStack(recipe.fuelPerTick())))
+                        List.of(GeneratorsChemicals.FUSION_FUEL.asStack(FUEL_ICON_AMOUNT)))
                 .addRichTooltipCallback((slot, tooltip) -> {
                     tooltip.add(Component.translatable(
                             "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick", recipe.fuelPerTick()));
@@ -99,9 +101,43 @@ public final class RadiationChamberJeiCategory implements IRecipeCategory<Radiat
                 });
 
         builder.addSlot(RecipeIngredientRole.INPUT, INPUT_X, INPUT_Y)
-                .addItemStack(recipe.createInputStack());
+                .addItemStack(recipe.createInputStack())
+                .addRichTooltipCallback((slot, tooltip) -> {
+                    if (recipe.requiresClearDaylight()) {
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title")
+                                .withStyle(ChatFormatting.GOLD));
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement")
+                                .withStyle(ChatFormatting.AQUA));
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.interruption_resets")
+                                .withStyle(ChatFormatting.RED));
+                    }
+                });
         builder.addSlot(RecipeIngredientRole.OUTPUT, OUTPUT_X, OUTPUT_Y)
-                .addItemStack(recipe.createOutputStack());
+                .addItemStacks(recipe.createPossibleOutputStacks())
+                .addRichTooltipCallback((slot, tooltip) -> {
+                    if (recipe.hasMultipleOutcomes()) {
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.outcome_title")
+                                .withStyle(ChatFormatting.GOLD));
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.success_chance",
+                                recipe.successChancePercent()).withStyle(ChatFormatting.GREEN));
+                        tooltip.add(Component.translatable(
+                                "jei.moremekasuitmodules.radiation_chamber.failure_chance",
+                                100 - recipe.successChancePercent()).withStyle(ChatFormatting.RED));
+                        if (recipe.requiresClearDaylight()) {
+                            tooltip.add(Component.translatable(
+                                    "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement")
+                                    .withStyle(ChatFormatting.AQUA));
+                            tooltip.add(Component.translatable(
+                                    "jei.moremekasuitmodules.radiation_chamber.interruption_resets")
+                                    .withStyle(ChatFormatting.RED));
+                        }
+                    }
+                });
     }
 
     @Override

@@ -145,8 +145,7 @@
   "death.moremekasuitmodules.atomic_fission.split": "%1$s был расщеплен на атомы",
   "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s дезинтегрировался",
   "tooltip.moremekasuitmodules.hold_shift": "Удерживайте Shift для подробностей",
-  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] Ни в коем случае не нажимайте правой кнопкой мыши, если на вас нет полного костюма MekaSuit!",
-  "tooltip.moremekasuitmodules.stranglet": "Этот блок умеет превращать другие блоки вокруг себя в себе подобные. Опасен для всего живого.",
+  "tooltip.moremekasuitmodules.stranglet": "Опасность: блок превращает соседние блоки в странглет и опасен для всего живого.",
   "block.moremekasuitmodules.unstable_air": "Нестабильный воздух",
   "block.moremekasuitmodules.radiation_chamber": "Стеклянная камера излучения",
   "block.moremekasuitmodules.reaction_block": "Реакционная обшивка",
@@ -162,5 +161,11 @@
   "tooltip.moremekasuitmodules.radiation_chamber.front": "Спереди направьте лазер Mekanism в фокус.",
   "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick": "Расход топлива %s мБ/тик",
   "jei.moremekasuitmodules.radiation_chamber.total_fuel": "Всего топлива %s мБ",
-  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Время реакции %s с"
+  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Время реакции %s с",
+  "jei.moremekasuitmodules.radiation_chamber.outcome_title": "Вероятность результата",
+  "jei.moremekasuitmodules.radiation_chamber.success_chance": "Странглет: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.failure_chance": "Заключённый очищенный слиток обсидиана: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title": "Условия реакции",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement": "Требуется ясный день в течение 90 секунд без перерыва.",
+  "jei.moremekasuitmodules.radiation_chamber.interruption_resets": "Ночь или дождь обнуляют прогресс; израсходованное топливо не возвращается."
 }

@@ -144,8 +144,7 @@
   "death.moremekasuitmodules.atomic_fission.split": "%1$s був розщеплений на атоми",
   "death.moremekasuitmodules.atomic_fission.disintegrated": "%1$s дезінтегрувався",
   "tooltip.moremekasuitmodules.hold_shift": "Утримуйте Shift для подробиць",
-  "tooltip.moremekasuitmodules.encased_strappel_ingot": "[DANGER] Ні в якому разі не натискайте правою кнопкою миші, якщо на вас немає повного костюма MekaSuit!",
-  "tooltip.moremekasuitmodules.stranglet": "Цей блок може перетворювати навколишні блоки на такі самі. Він небезпечний для всього живого.",
+  "tooltip.moremekasuitmodules.stranglet": "Небезпека: блок перетворює сусідні блоки на странглет і становить загрозу для всього живого.",
   "block.moremekasuitmodules.unstable_air": "Нестабільне повітря",
   "block.moremekasuitmodules.radiation_chamber": "Скляна камера опромінення",
   "block.moremekasuitmodules.reaction_block": "Реакційна обшивка",
@@ -162,5 +161,11 @@
   "biome.moremekasuitmodules.strange_biome": "Дивний біом",
   "jei.moremekasuitmodules.radiation_chamber.fuel_per_tick": "Витрата палива %s мБ/тік",
   "jei.moremekasuitmodules.radiation_chamber.total_fuel": "Усього палива %s мБ",
-  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Час реакції %s с"
+  "jei.moremekasuitmodules.radiation_chamber.reaction_time": "Час реакції %s с",
+  "jei.moremekasuitmodules.radiation_chamber.outcome_title": "Імовірність результату",
+  "jei.moremekasuitmodules.radiation_chamber.success_chance": "Странглет: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.failure_chance": "Укладений очищений злиток обсидіану: %s%%",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_title": "Умови реакції",
+  "jei.moremekasuitmodules.radiation_chamber.clear_daylight_requirement": "Потрібен ясний день протягом 90 секунд без перерви.",
+  "jei.moremekasuitmodules.radiation_chamber.interruption_resets": "Ніч або дощ скидають прогрес; витрачене паливо не повертається."
 }

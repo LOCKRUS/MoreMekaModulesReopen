@@ -1,10 +1,27 @@
 # Changelog
 
+## 1.6.5
+
+### Added and changed
+
+- Increased D-T fuel consumption tenfold for every radiation-chamber recipe: 10 mB per active tick for the standard recipes and 100 mB per active tick for the Strappel-ingot recipe.
+- Added a radiation-chamber recipe for the encased Strappel ingot: 90 seconds (180,000 mB total), with a 50% chance to produce a Stranglet and a 50% chance to produce an encased purified obsidian ingot.
+- Added a black dye-to-coal reaction, matching green dye-to-slime ball at 15 seconds and 10 mB of D-T fuel per active tick (3,000 mB total).
+- The Strappel-ingot reaction requires clear daylight for the full duration. Night or rain resets its progress; the input remains in the chamber, while fuel already consumed is not refunded.
+- Removed the legacy right-click block activation for the encased Strappel ingot. Removed its now-unnecessary tooltip; the hazard warning belongs to the Stranglet block tooltip.
+- JEI now cycles through both possible outcomes and describes their chances and the clear-daylight requirement. Added translations for the new hints in all five supported languages.
+- Increased the D-T visual in JEI to a full 1,000 mB indicator so the fuel is easier to distinguish; the tooltip continues to show the exact per-tick and total recipe consumption.
+
+### Validation
+
+- Final `./gradlew clean test build` completed successfully with JDK 21; all 7 unit tests passed.
+- Compilation reports two existing deprecation warnings for Mekanism's `ChemicalBuilder.gaseous()` calls in `MoreMekaSuitModulesChemicals.java`.
+
 ## 1.6.5-beta1 (Pre-release)
 
 ### Added
 
-- Added an optional JEI recipe category for the radiation chamber, using the supplied 256×256 texture and its 176×96 interface region.
+- Added an optional JEI recipe category for the radiation chamber, using the supplied 256×256 texture and its 176×90 visible interface region.
 - Hovering the D-T fuel input shows use per active tick, total recipe fuel (1,200 mB for Stranglet, 600 mB for deepslate, 300 mB for green dye), and active reaction time. The Stranglet recipe needs refueling because its total exceeds the 1,000 mB tank capacity.
 
 ### Fixed
