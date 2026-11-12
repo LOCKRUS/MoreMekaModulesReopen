@@ -186,6 +186,16 @@ public class ShieldProviderHandler {
             summery.entropy = 0;
         }
 
+        // All current shield providers use the same per-point config rate. Distribute
+        // the aggregate debit with the integer-safe allocator to preserve small shares.
+        long requestedEnergy = 0;
+        for (ItemStack stack : summery.armorStacks) {
+            if (!stack.isEmpty() && stack.getItem() instanceof IShieldProvider provider) {
+                requestedEnergy = (long) (totalPointsToAdd * provider.getEnergyPerProtectionPoint());
+                break;
+            }
+        }
+        long[] energyToConsume = ProportionalEnergyAllocator.allocate(summery.energyAllocation, requestedEnergy);
 
         for (int i = 0; i < summery.armorStacks.size(); i++) {
             ItemStack stack = summery.armorStacks.get(i);
@@ -196,8 +206,9 @@ public class ShieldProviderHandler {
                 continue;
             }
             double maxForPiece = provider.getProtectionPoints(stack);
-            int energyAmount = provider.getEnergyPerProtectionPoint();
-            provider.modifyEnergy(stack, ((summery.energyAllocation[i] / summery.totalEnergyStored) * (long) (totalPointsToAdd * energyAmount)), player);
+            if (energyToConsume[i] > 0) {
+                provider.modifyEnergy(stack, energyToConsume[i], player);
+            }
             double pointsForPiece = (summery.pointsDown[i] / Math.max(1, summery.maxProtectionPoints - summery.protectionPoints)) * totalPointsToAdd;
             summery.allocation[i] += pointsForPiece;
             if (summery.allocation[i] > maxForPiece || maxForPiece - summery.allocation[i] < 0.1F) {

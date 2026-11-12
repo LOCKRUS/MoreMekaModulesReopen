@@ -20,6 +20,12 @@ class ProportionalEnergyAllocatorTest {
     }
 
     @Test
+    void allocatesSmallShieldRegenerationCostsAcrossProviders() {
+        assertArrayEquals(new long[]{5L, 5L},
+                ProportionalEnergyAllocator.allocate(new long[]{5L, 5L}, 10L));
+    }
+
+    @Test
     void neverConsumesMoreThanTheTotalAvailableEnergy() {
         assertArrayEquals(new long[]{2L, 3L},
                 ProportionalEnergyAllocator.allocate(new long[]{2L, 3L}, 10_000_000L));

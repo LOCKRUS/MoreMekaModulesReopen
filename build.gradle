@@ -144,7 +144,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
     implementation "mekanism:Mekanism:1.21.1-10.7.14.79"
     implementation "mekanism:Mekanism:1.21.1-10.7.14.79:generators"
-    implementation "curse.maven:jei-238222:6829086"
+    // JEI is an optional integration: compile against it, and include it only in local dev runs.
+    compileOnly "curse.maven:jei-238222:6829086"
+    localRuntime "curse.maven:jei-238222:6829086"
     implementation "curse.maven:jade-324717:6853386"
     implementation "curse.maven:immersive-engineering-231951:6733669"
     implementation "curse.maven:draconic-evolution-223565:6835420"

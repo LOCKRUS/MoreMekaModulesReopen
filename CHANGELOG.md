@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.6.5-beta1 (Pre-release)
+
+### Added
+
+- Added an optional JEI recipe category for the radiation chamber, using the supplied 256×256 texture and its 176×96 interface region.
+- Hovering the D-T fuel input shows use per active tick, total recipe fuel (1,200 mB for Stranglet, 600 mB for deepslate, 300 mB for green dye), and active reaction time. The Stranglet recipe needs refueling because its total exceeds the 1,000 mB tank capacity.
+
+### Fixed
+
+- Corrected shield-recharge energy debits so small provider shares are not lost to integer division.
+- Fixed the MekaTool flamethrower handler so a missing or disabled module does not intercept ordinary right-click behavior.
+- Re-encoded the radiation-chamber JEI background as a real PNG and made only the edge-connected pure-white background transparent, preserving non-white colors and isolated white details.
+
+### Updated
+
+- Revised 14 module descriptions in all five included languages to better match implemented behavior, settings, costs and timings.
+
+### Validation and compatibility
+
+- Clean JDK 21 Gradle test/build completed; all 7 unit tests passed.
+- JEI is an optional client integration (minimum API version 19.8.5); Mekanism and Mekanism Generators remain required.
+
 ## 1.6.4
 
 ### Fixed

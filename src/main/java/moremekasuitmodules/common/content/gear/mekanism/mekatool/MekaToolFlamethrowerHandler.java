@@ -38,8 +38,11 @@ public final class MekaToolFlamethrowerHandler {
         }
         IModule<ModuleMekaToolFlamethrowerUnit> module = IModuleHelper.INSTANCE.getIfEnabled(
                 stack, MekaSuitMoreModules.MEKA_TOOL_FLAMETHROWER_UNIT);
-        if (module == null || (!player.getAbilities().instabuild
-                && !canFire(player, stack, module.getCustomInstance().flameMode()))) {
+        if (module == null) {
+            return;
+        }
+        if (!player.getAbilities().instabuild
+                && !canFire(player, stack, module.getCustomInstance().flameMode())) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.FAIL);
             return;
