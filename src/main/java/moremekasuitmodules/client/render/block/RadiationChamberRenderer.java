@@ -1,5 +1,7 @@
 package moremekasuitmodules.client.render.block;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import mekanism.client.render.lib.effect.BoltRenderer;
@@ -12,12 +14,16 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.RandomSource;
 
 public final class RadiationChamberRenderer implements BlockEntityRenderer<RadiationChamberBlockEntity> {
     private final BoltRenderer boltRenderer = new BoltRenderer();
     private final RandomSource random = RandomSource.create();
+    private final Map<Long, Long> lastArcUpdateSlots = new HashMap<>();
+    private Level arcCacheLevel;
+    private long lastArcCacheCleanupTick = Long.MIN_VALUE;
 
     public RadiationChamberRenderer(BlockEntityRendererProvider.Context context) {
     }
@@ -37,22 +43,40 @@ public final class RadiationChamberRenderer implements BlockEntityRenderer<Radia
             poseStack.popPose();
         }
 
-        if (!chamber.isReactionActive() || chamber.getLevel() == null) {
+        Level level = chamber.getLevel();
+        if (!chamber.isReactionActive() || level == null) {
             return;
         }
-        long time = chamber.getLevel().getGameTime();
-        for (int i = 0; i < 5; i++) {
-            double angle = time * 0.19 + partialTick * 0.19 + (Math.PI * 2 * i / 5.0);
-            double nextAngle = angle + 1.2 + random.nextDouble() * 0.7;
-            Vec3 start = new Vec3(0.5 + Math.cos(angle) * 0.31, 0.5 + Math.sin(angle * 1.7) * 0.28,
-                    0.5 + Math.sin(angle) * 0.31);
-            Vec3 end = new Vec3(0.5 + Math.cos(nextAngle) * 0.31, 0.5 + Math.sin(nextAngle * 1.7) * 0.28,
-                    0.5 + Math.sin(nextAngle) * 0.31);
-            BoltEffect arc = new BoltEffect(BoltEffect.BoltRenderInfo.ELECTRICITY, start, end, 12)
-                    .size(0.018F)
-                    .lifespan(8)
-                    .spawn(BoltEffect.SpawnFunction.NO_DELAY);
-            boltRenderer.update(new ArcKey(chamber.getBlockPos().asLong(), i), arc, partialTick);
+        if (arcCacheLevel != level) {
+            lastArcUpdateSlots.clear();
+            arcCacheLevel = level;
+            lastArcCacheCleanupTick = Long.MIN_VALUE;
+        }
+        long time = level.getGameTime();
+        if (lastArcCacheCleanupTick == Long.MIN_VALUE || time < lastArcCacheCleanupTick
+                || time - lastArcCacheCleanupTick >= 200L) {
+            lastArcUpdateSlots.entrySet().removeIf(entry -> entry.getValue() / 2L < time - 40L);
+            lastArcCacheCleanupTick = time;
+        }
+        long updateSlot = time * 2L + (partialTick >= 0.5F ? 1L : 0L);
+        long positionKey = chamber.getBlockPos().asLong();
+        Long lastUpdateSlot = lastArcUpdateSlots.get(positionKey);
+        if (lastUpdateSlot == null || lastUpdateSlot != updateSlot) {
+            double renderTime = time + partialTick;
+            for (int i = 0; i < 5; i++) {
+                double angle = renderTime * 0.19 + (Math.PI * 2 * i / 5.0);
+                double nextAngle = angle + 1.2 + random.nextDouble() * 0.7;
+                Vec3 start = new Vec3(0.5 + Math.cos(angle) * 0.31, 0.5 + Math.sin(angle * 1.7) * 0.28,
+                        0.5 + Math.sin(angle) * 0.31);
+                Vec3 end = new Vec3(0.5 + Math.cos(nextAngle) * 0.31, 0.5 + Math.sin(nextAngle * 1.7) * 0.28,
+                        0.5 + Math.sin(nextAngle) * 0.31);
+                BoltEffect arc = new BoltEffect(BoltEffect.BoltRenderInfo.ELECTRICITY, start, end, 12)
+                        .size(0.018F)
+                        .lifespan(8)
+                        .spawn(BoltEffect.SpawnFunction.NO_DELAY);
+                boltRenderer.update(new ArcKey(positionKey, i), arc, partialTick);
+            }
+            lastArcUpdateSlots.put(positionKey, updateSlot);
         }
         boltRenderer.render(partialTick, poseStack, buffers);
     }

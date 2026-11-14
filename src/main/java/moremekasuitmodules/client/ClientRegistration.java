@@ -5,12 +5,14 @@ import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbModel;
 import moremekasuitmodules.client.render.entity.AntimatterExplosiveOrbRenderer;
 import moremekasuitmodules.client.render.entity.AntimatterChargeRenderer;
 import moremekasuitmodules.client.render.block.RadiationChamberRenderer;
+import moremekasuitmodules.client.particle.AntimatterChargeParticle;
 import moremekasuitmodules.client.sound.RadiationChamberSoundController;
 import moremekasuitmodules.common.MoreMekaModulesReopen;
 import moremekasuitmodules.common.block.entity.RadiationChamberBlockEntity;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEntities;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlockEntities;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesParticles;
 import moremekasuitmodules.common.registries.MekaSuitMoreModulesItem;
 import mekanism.common.item.gear.ItemMekaTool;
 import net.neoforged.api.distmarker.Dist;
@@ -20,6 +22,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
@@ -42,6 +45,11 @@ public class ClientRegistration {
         NeoForge.EVENT_BUS.register(new ClientTickHandler());
     }
 
+    @SubscribeEvent
+    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(MoreMekaSuitModulesParticles.ANTIMATTER_CHARGE.get(),
+                AntimatterChargeParticle.Provider::new);
+    }
 
     @SubscribeEvent
     public static void registerOverlays(RegisterGuiLayersEvent event) {

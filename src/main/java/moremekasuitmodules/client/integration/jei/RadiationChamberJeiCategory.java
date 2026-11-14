@@ -42,13 +42,13 @@ public final class RadiationChamberJeiCategory implements IRecipeCategory<Radiat
             recipe -> recipe.id().toString()
     );
 
-    private static final int FUEL_X = 28;
-    private static final int FUEL_Y = 34;
+    private static final int FUEL_X = 25;
+    private static final int FUEL_Y = 26;
     private static final long FUEL_ICON_AMOUNT = 1_000;
-    private static final int INPUT_X = 54;
-    private static final int INPUT_Y = 35;
-    private static final int OUTPUT_X = 126;
-    private static final int OUTPUT_Y = 35;
+    private static final int INPUT_X = 51;
+    private static final int INPUT_Y = 26;
+    private static final int OUTPUT_X = 131;
+    private static final int OUTPUT_Y = 25;
 
     private final IDrawable background;
     private final IDrawable icon;

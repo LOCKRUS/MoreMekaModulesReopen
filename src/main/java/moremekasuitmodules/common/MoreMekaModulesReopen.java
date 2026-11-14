@@ -16,6 +16,7 @@ import moremekasuitmodules.common.registries.MoreMekaSuitModulesChemicals;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesBlocks;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesEffects;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesParticles;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolBlasterHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolFlamethrowerHandler;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolLavaHandler;
@@ -79,6 +80,7 @@ public class MoreMekaModulesReopen implements IModModule {
         }
         MekaSuitMoreModulesCreativeTabs.CREATIVE_TABS.register(modEventBus);
         MoreMekaSuitModulesEntities.ENTITY_TYPES.register(modEventBus);
+        MoreMekaSuitModulesParticles.PARTICLE_TYPES.register(modEventBus);
     }
 
     public static ResourceLocation rl(String path) {

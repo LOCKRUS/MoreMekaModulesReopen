@@ -81,7 +81,9 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
         if (level == null || level.isClientSide) {
             return;
         }
-        updateStructureState(null);
+        if ((level.getGameTime() & 1L) == 0L) {
+            updateStructureState(null);
+        }
         RadiationChamberRecipe recipe = RadiationChamberRecipes.find(contents).orElse(null);
         int requiredTicks = recipe == null ? 0 : recipe.durationTicks();
         if (recipe != null && recipe.requiresClearDaylight()
@@ -253,8 +255,11 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
     }
 
     public boolean tryInsertInput(Player player, ItemStack heldStack) {
-        if (level == null || level.isClientSide || !structureFormed || !contents.isEmpty()
-                || !isSupportedInput(heldStack)) {
+        if (level == null || level.isClientSide) {
+            return false;
+        }
+        updateStructureState(player instanceof ServerPlayer completingPlayer ? completingPlayer : null);
+        if (!structureFormed || !contents.isEmpty() || !isSupportedInput(heldStack)) {
             return false;
         }
         contents = heldStack.copyWithCount(1);
@@ -268,7 +273,11 @@ public final class RadiationChamberBlockEntity extends BlockEntity implements IL
     }
 
     public ItemStack takeContents() {
-        if (level == null || level.isClientSide || !structureFormed || contents.isEmpty()) {
+        if (level == null || level.isClientSide) {
+            return ItemStack.EMPTY;
+        }
+        updateStructureState(null);
+        if (!structureFormed || contents.isEmpty()) {
             return ItemStack.EMPTY;
         }
         ItemStack extracted = contents.copy();

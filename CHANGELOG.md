@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.6.6
+
+### Updated
+
+- Aligned Radiation Chamber JEI ingredients to the visible 16×16 cell areas; the larger item-input frame is centered independently.
+- Replaced the opaque Dragon Breath charge plume with a translucent purple spiral that remains small, appears less often, and now emits just above the MekaTool muzzle.
+- Updated the JEI category to the user's final 256×256 PNG; ingredient slot coordinates remain unchanged.
+- Smoothed the charging orb's render-time position while the player moves.
+
+### Optimized
+
+- Reduced Radiation Chamber structure scans to every other server tick, with immediate validation before manual input or extraction.
+- Reduced nearby Stranglet exposure checks for living entities to every five ticks and removed redundant player-inventory stream scans; Stranglet item cleanup remains immediate.
+- Capped Radiation Chamber bolt-effect updates at 40 Hz per chamber instead of rebuilding effects on every render frame.
+
+### Fixed
+
+- Fully reworked the Radiation Chamber's JEI recipe previews to match the final supplied texture, with 16×16 ingredients aligned to the visible cell boundaries.
+- Added self-drop loot tables for the Reaction Block, Radiation Chamber, Burnt Grass, and Charred Wood.
+
 ## 1.6.5
 
 ### Added

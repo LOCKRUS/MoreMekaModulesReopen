@@ -9,6 +9,7 @@ import moremekasuitmodules.common.config.MoreModulesConfig;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.MekaToolMuzzle;
 import moremekasuitmodules.common.content.gear.mekanism.mekatool.ModuleMekaToolFlamethrowerUnit;
 import moremekasuitmodules.common.registries.MekaSuitMoreModules;
+import moremekasuitmodules.common.registries.MoreMekaSuitModulesParticles;
 import moremekasuitmodules.common.registries.MoreMekaSuitModulesSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.DeathScreen;
@@ -92,6 +93,7 @@ public class ClientTickHandler {
             steamCoolingTicks--;
         }
         spawnFlamethrowerSteam();
+        spawnAntimatterChargeParticles();
     }
 
     public static float antimatterChargeProgress(ItemStack stack) {
@@ -165,6 +167,39 @@ public class ClientTickHandler {
                 && stack.getItem() instanceof ItemMekaTool && isAntimatterModuleEnabled(stack);
     }
 
+    /** Emits a light violet spiral while the antimatter orb is being charged. */
+    private static void spawnAntimatterChargeParticles() {
+        LocalPlayer player = minecraft.player;
+        if (player == null || minecraft.level == null) {
+            return;
+        }
+        ItemStack stack = player.getMainHandItem();
+        if (!isAntimatterCharging(player, stack)) {
+            return;
+        }
+        int heldTicks = Math.max(0, ANTIMATTER_CHARGE_DURATION - player.getUseItemRemainingTicks());
+        if (heldTicks < ANTIMATTER_ORB_APPEAR_TICKS || heldTicks % 3 != 0) {
+            return;
+        }
+
+        Vec3 spawn = antimatterChargeParticleOrigin(player);
+        minecraft.level.addParticle(MoreMekaSuitModulesParticles.ANTIMATTER_CHARGE.get(),
+                spawn.x, spawn.y, spawn.z, 0.0D, 0.0D, 0.0D);
+    }
+
+    /** Starts the subtle spiral just beyond the visible muzzle and above its barrel axis. */
+    private static Vec3 antimatterChargeParticleOrigin(LocalPlayer player) {
+        Vec3 direction = player.getViewVector(1.0F).normalize();
+        Vec3 worldUp = new Vec3(0.0D, 1.0D, 0.0D);
+        Vec3 right = direction.cross(worldUp);
+        Vec3 viewUp = right.lengthSqr() < 1.0E-6D
+                ? worldUp
+                : right.normalize().cross(direction).normalize();
+        return MekaToolMuzzle.origin(player, direction)
+                .add(direction.scale(0.08D))
+                .add(viewUp.scale(0.20D));
+    }
+
     /** Matches the flamethrower's particle origin: the visible MekaTool muzzle. */
     public static Vec3 mekaToolMuzzleOrigin(LocalPlayer player) {
         return mekaToolMuzzleOrigin(player, player.getViewVector(1.0F).normalize());
@@ -172,7 +207,12 @@ public class ClientTickHandler {
 
     /** Places the charging orb just beyond and slightly above the visible MekaTool muzzle. */
     public static Vec3 mekaToolChargeOrigin(LocalPlayer player) {
-        Vec3 direction = player.getViewVector(1.0F).normalize();
+        return mekaToolChargeOrigin(player, 1.0F);
+    }
+
+    /** Uses the render-time player pose so the charge orb stays smooth while the player moves. */
+    public static Vec3 mekaToolChargeOrigin(LocalPlayer player, float partialTick) {
+        Vec3 direction = player.getViewVector(partialTick).normalize();
         Vec3 right = direction.cross(new Vec3(0.0D, 1.0D, 0.0D));
         if (right.lengthSqr() < 1.0E-6D) {
             right = new Vec3(1.0D, 0.0D, 0.0D);
@@ -180,7 +220,7 @@ public class ClientTickHandler {
             right = right.normalize();
         }
         Vec3 up = right.cross(direction).normalize();
-        return MekaToolMuzzle.origin(player, direction)
+        return MekaToolMuzzle.origin(player, direction, partialTick)
                 .add(direction.scale(0.20D))
                 .add(up.scale(0.10D));
     }

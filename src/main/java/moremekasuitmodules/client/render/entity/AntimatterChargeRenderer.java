@@ -32,13 +32,14 @@ public final class AntimatterChargeRenderer {
         if (alpha <= 0.0F) {
             return;
         }
+        float partialTick = event.getPartialTick().getGameTimeDeltaPartialTick(false);
         float progress = ClientTickHandler.antimatterChargeProgress(minecraft.player.getMainHandItem());
         if (model == null) {
             ModelPart root = minecraft.getEntityModels().bakeLayer(AntimatterExplosiveOrbModel.LAYER_LOCATION);
             model = new AntimatterExplosiveOrbModel(root);
         }
 
-        Vec3 origin = ClientTickHandler.mekaToolChargeOrigin(minecraft.player);
+        Vec3 origin = ClientTickHandler.mekaToolChargeOrigin(minecraft.player, partialTick);
         Vec3 camera = event.getCamera().getPosition();
         PoseStack poseStack = event.getPoseStack();
         poseStack.pushPose();
@@ -51,8 +52,7 @@ public final class AntimatterChargeRenderer {
         // normal entity renderer. Cancel that pivot here so the cube's center,
         // rather than the bone origin, sits exactly at the MekaTool muzzle.
         poseStack.translate(0.0D, -21.5D / 16.0D, 0.0D);
-        model.setupChargeAnim(minecraft.level.getGameTime()
-                + event.getPartialTick().getGameTimeDeltaPartialTick(false));
+        model.setupChargeAnim(minecraft.level.getGameTime() + partialTick);
         MultiBufferSource.BufferSource buffers = minecraft.renderBuffers().bufferSource();
         VertexConsumer consumer = buffers.getBuffer(RenderType.entityTranslucent(AntimatterExplosiveOrbRenderer.TEXTURE));
         int alphaByte = Mth.clamp((int) (alpha * 255.0F), 0, 255);

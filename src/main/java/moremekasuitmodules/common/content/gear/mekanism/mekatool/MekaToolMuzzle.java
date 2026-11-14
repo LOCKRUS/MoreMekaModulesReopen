@@ -15,6 +15,11 @@ public final class MekaToolMuzzle {
     }
 
     public static Vec3 origin(Player player, Vec3 direction) {
+        return origin(player, direction, 1.0F);
+    }
+
+    /** Calculates the muzzle from the same interpolated player pose used by rendering. */
+    public static Vec3 origin(Player player, Vec3 direction, float partialTick) {
         Vec3 forward = direction.normalize();
         Vec3 right = forward.cross(new Vec3(0.0D, 1.0D, 0.0D));
         if (right.lengthSqr() < 1.0E-6D) {
@@ -23,7 +28,7 @@ public final class MekaToolMuzzle {
             right = right.normalize();
         }
         Vec3 up = right.cross(forward).normalize();
-        return player.getEyePosition()
+        return player.getEyePosition(partialTick)
                 .add(forward.scale(FORWARD_OFFSET))
                 .add(right.scale(RIGHT_OFFSET))
                 .subtract(up.scale(DOWN_OFFSET));

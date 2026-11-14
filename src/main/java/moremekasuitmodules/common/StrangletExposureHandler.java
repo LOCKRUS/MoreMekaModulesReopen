@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
@@ -21,6 +22,8 @@ public final class StrangletExposureHandler {
     private static final int EFFECT_DURATION = 40;
     private static final int STRANGLET_AMPLIFIER = 1;
     private static final int UNSTABLE_AIR_AMPLIFIER = 0;
+    private static final int EXPOSURE_CHECK_INTERVAL = 5;
+    private static final EquipmentSlot[] EQUIPMENT_SLOTS = EquipmentSlot.values();
 
     @SubscribeEvent
     public void onEntityTick(EntityTickEvent.Post event) {
@@ -36,6 +39,9 @@ public final class StrangletExposureHandler {
         }
 
         if (!(event.getEntity() instanceof LivingEntity living)) {
+            return;
+        }
+        if (living.tickCount % EXPOSURE_CHECK_INTERVAL != 0) {
             return;
         }
 
@@ -84,15 +90,25 @@ public final class StrangletExposureHandler {
     }
 
     private static boolean carriesStranglet(LivingEntity entity) {
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
+        if (entity instanceof Player player) {
+            var inventory = player.getInventory();
+            return containsStranglet(inventory.items)
+                    || containsStranglet(inventory.armor)
+                    || containsStranglet(inventory.offhand);
+        }
+        for (EquipmentSlot slot : EQUIPMENT_SLOTS) {
             if (entity.getItemBySlot(slot).is(MekaSuitMoreModulesItem.STRANGLET.get())) {
                 return true;
             }
         }
-        if (entity instanceof Player player) {
-            return player.getInventory().items.stream().anyMatch(stack -> stack.is(MekaSuitMoreModulesItem.STRANGLET.get()))
-                    || player.getInventory().armor.stream().anyMatch(stack -> stack.is(MekaSuitMoreModulesItem.STRANGLET.get()))
-                    || player.getInventory().offhand.stream().anyMatch(stack -> stack.is(MekaSuitMoreModulesItem.STRANGLET.get()));
+        return false;
+    }
+
+    private static boolean containsStranglet(Iterable<ItemStack> stacks) {
+        for (ItemStack stack : stacks) {
+            if (stack.is(MekaSuitMoreModulesItem.STRANGLET.get())) {
+                return true;
+            }
         }
         return false;
     }
